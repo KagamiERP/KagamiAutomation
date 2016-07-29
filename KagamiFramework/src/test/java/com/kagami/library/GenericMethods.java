@@ -496,7 +496,7 @@ Objective: This method will define the Click operations performed on the objects
 		    }
 		
 		 
-		 public static boolean SelectRadioButton(WebDriver wDriver, By objLocator) {
+		 public static boolean electRadioButton(WebDriver wDriver, By objLocator) {
 		  try{
 		   visibilityStatus =GenericMethods.ElementVisibility(wDriver, objLocator); 
 		   
