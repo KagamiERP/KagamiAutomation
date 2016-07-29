@@ -495,4 +495,33 @@ Objective: This method will define the Click operations performed on the objects
 		  
 		    }
 		
+		 
+		 public static boolean deeSelectRadioButton(WebDriver wDriver, By objLocator) {
+		  try{
+		   visibilityStatus =GenericMethods.ElementVisibility(wDriver, objLocator); 
+		   
+		    if(visibilityStatus)
+		    {
+		     log.info("The Radio Button "+objLocator+"is already selected");
+		   boolean radioButtonIsSelected = wDriver.findElement(objLocator).isSelected();
+		   if(radioButtonIsSelected)
+		   {    GenericMethods.clickElementByJsExecutor(wDriver, objLocator);
+		     log.info("The Radio Button"+objLocator+"is deselected");
+		   }
+		   else
+		   {log.warn("Unable to deselect the Radio Button "+objLocator);
+		   }
+		    }
+		    return true;
+		    }    
+		   
+		   catch(NoSuchElementException e)
+		   {log.warn("Element " + objLocator + " was not found in DOM "
+		      + e.getStackTrace());}
+		   return false;
+		  
+		    }
+		
+		 
+		 
 }
