@@ -21,7 +21,7 @@
       <version>2.53.0</version>
      </dependency>
      <dependency>
-     <!-- Added gson dependencies -->
+     <!-- Added gson pom dependencies -->
     <groupId>com.google.code.gson</groupId>
     <artifactId>gson</artifactId>
     <version>1.4</version>
