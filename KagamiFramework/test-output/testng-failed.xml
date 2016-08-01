@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]">
-  <test name="Default test(failed)" preserve-order="true">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
     <classes>
-      <class name="com.kagami.uiTests.ApplicationUi">
+      <class name="com.kagami.testconfig.TestPreconditions">
         <methods>
-          <include name="LogIn"/>
+          <include name="presuite"/>
+          <include name="main"/>
+          <include name="postsuite"/>
         </methods>
-      </class> <!-- com.kagami.uiTests.ApplicationUi -->
+      </class> <!-- com.kagami.testconfig.TestPreconditions -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

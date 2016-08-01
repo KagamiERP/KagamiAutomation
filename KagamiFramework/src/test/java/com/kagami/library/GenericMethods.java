@@ -1,10 +1,17 @@
 package com.kagami.library;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -12,11 +19,17 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.seleniumhq.jetty9.http.HttpTester.Message;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /** Summary 
 Author Name: Vishnu Reddy
@@ -31,6 +44,9 @@ public class GenericMethods
 	private  static boolean visibilityStatus;
 	private  static Actions act;
 	private  static Logger logger = Logger.getLogger("UserActions");
+	
+	 private static WebDriverWait wait;
+	 private static Logger logger1 = Logger.getLogger("Wait");
 	
  
 /** 
@@ -521,7 +537,87 @@ Objective: This method will define the Click operations performed on the objects
 		   return false;
 		  
 		    }
+		 
+		 /** 
+		   Summary: About Current Date and Time
+		   Author Name: Vishnu Reddy
+		   Objective: This method will get the Current System Date and Time*/
+		 
+		 public static String getcurrentDateAndTime(){
+			  try{
+			  Date date = new Date();
+			  SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH:mm:ss");
+			  String currentDate = sdf.format(date);
+			    
+			  currentDate = currentDate.replaceAll(":","-");
+			  log.info("Current Date and Time has been retrieved successfully");
+			  return currentDate;
+			  }
+			  
+			  catch (Exception e) {
+			   log.warn("Current Date and Time are not retrieved successfully" + e.getStackTrace());
+			   
+			  }
+			  return null;
+			  
+			 }
+		 
 		
+			 
+			  /** 
+			  Summary: About ScreenShot of the page
+			  Author Name: Vishnu Reddy
+			  Objective: This method will captures the failed test cases and stores it in respective folder */  
+			   
+			 public static void takeScreenShot(WebDriver wDriver) throws IOException{
+			 String filePath = "./test-output/Screenshot/Screenshot_"+GenericMethods.getcurrentDateAndTime()+".png";
+			  try{
+			   
+			   File screenshotFile = ((TakesScreenshot) wDriver).getScreenshotAs(OutputType.FILE);
+			   File targetFile = new File(filePath);
+			   FileUtils.copyFile(screenshotFile, targetFile);
+			   log.info("Screenshot has been taken successfully and stored"+targetFile);
+			   
+			  } catch (Exception e) {
+			   log.warn("An exception occured while taking screenshot " + e.getStackTrace());
+			       }
+			 }
+			 
+			 /** 
+			 Summary: About Mouse Over
+			 Author Name: Vishnu Reddy
+			 Objective: This method will Perform Mouse Over actions on the WebElements */
+			 
+			 public static void mouseOver(WebDriver wDriver, By objLocator){
+			  try{
+			  Actions act = new Actions(wDriver);
+			  WebElement element = wDriver.findElement(objLocator);
+			  act.moveToElement(element).perform();
+			  logger.info("MouseOver operation on "+objLocator+"has been performed successfully");
+			 }
+			  catch (Exception e) {
+			   logger.warn("Element " + objLocator + " was not found in DOM "
+			        + e.getStackTrace());
+			  }
+			 }
+			 /** 
+			 Summary: About Wait for Element Visibility
+			 Author Name: Vishnu Reddy
+			 Objective: This method will wait until the Element is visible */
+			 
+			 public static boolean waitForElementVisibility(WebDriver wDriver,
+			   By objLocator, long iTimeout) {
+			  try {
+			   wait = new WebDriverWait(wDriver, iTimeout);
+			   wait.until(ExpectedConditions.visibilityOfElementLocated(objLocator));
+			   logger1.info("element " + objLocator + " is visible after waiting.");
+			   return true;
+			  } catch (Exception e) {
+			   logger1.warn("element " + objLocator+ " is not present after waiting " + iTimeout + " secs.");
+			  }
+			  return false;
+			 }
+			}
+	
 		 
 		 
-}
