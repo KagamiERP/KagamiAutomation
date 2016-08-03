@@ -56,13 +56,50 @@ public class CustomizedReport implements IReporter{
 
 		startHtml(writer);
 		writeReportTitle(reportTitle);
+		testEnvironmentDetails(writer);
 		generateSuiteSummaryReport(suites);
 		generateMethodSummaryReport(suites);
 		generateMethodDetailReport(suites);
-		endHtml(writer);
+		//endHtml(writer);
 		writer.flush();
 		writer.close();
 	}
+
+	// Creates table with Automation Test Environment details 
+	private void testEnvironmentDetails(PrintWriter out) {
+		String table = "<!DOCTYPE html>"+"<html>"+"<head><style>"
+				+"table, th, td { border: 1px solid black;"
+				+"border-collapse: collapse;}"
+				+"th, td {padding: 5px;text-align: left;}"
+				+"</style>"
+				+"</head>"
+				+"<body>"
+				+"<table style=\"width:50%\">"
+				+"<tr>"
+				+"<th colspan='2'style=text-align:center bgcolor='#FFE4E1'> Automation Test Environment</th>"
+				+"</tr>"
+					+"<tr>"
+				    +"<th>Browser</th>"
+				    +"<td>"+"Firefox"+"</td>"
+				    +"</tr>"
+				    +"<tr>"
+				    +"<th>URL</th>"
+				    +"<td>"+"http://52.37.98.209:8080/kagami-erp-generated/"+"</td>"
+				  +"</tr>"
+				+"<th>OS</th>"
+				+"<td>"+"Windows7"+"</td>"
+				  +"</tr>"
+				  +"<th>Build</th>"
+					+"<td>"+""+"</td>"
+					  +"</tr>"
+				  +"</table>"
+				+"</body>"
+				+"</html>";
+				
+				out.println(table);
+		
+	}
+
 
 	protected PrintWriter createWriter(String outdir) throws IOException {
 		new File(outdir).mkdirs();
@@ -87,11 +124,11 @@ public class CustomizedReport implements IReporter{
 				ITestContext testContext = r2.getTestContext();
 				String testName = testContext.getName();
 				m_testIndex = testIndex;
-				resultSummary(suite, testContext.getFailedConfigurations(), testName, "failed", " (configuration methods)");
-				resultSummary(suite, testContext.getFailedTests(), testName, "failed", "");
-				resultSummary(suite, testContext.getSkippedConfigurations(), testName, "skipped", " (configuration methods)");
-				resultSummary(suite, testContext.getSkippedTests(), testName, "skipped", "");
-				resultSummary(suite, testContext.getPassedTests(), testName, "passed", "");
+				resultSummary(suite, testContext.getFailedConfigurations(), testName, "Failed", " (configuration methods)");
+				resultSummary(suite, testContext.getFailedTests(), testName, "Failed", "");
+				resultSummary(suite, testContext.getSkippedConfigurations(), testName, "Skipped", " (configuration methods)");
+				resultSummary(suite, testContext.getSkippedTests(), testName, "Skipped", "");
+				resultSummary(suite, testContext.getPassedTests(), testName, "Passed", "");
 				testIndex++;
 			}
 		}
@@ -188,15 +225,8 @@ public class CustomizedReport implements IReporter{
 				String description = method.getDescription();
 				String testInstanceName = resultSet
 						.toArray(new ITestResult[] {})[0].getTestName();
-				buff.append("<td><a href=\"#m"
-						+ m_methodIndex
-						+ "\">"
-						+ qualifiedName(method)
-						+ " "
-						+ (description != null && description.length() > 0 ? "(\""
-								+ description + "\")"
-								: "")
-								+ "</a>"
+				buff.append("<td><a href=\"#m"+ m_methodIndex+ "\">"+ qualifiedName(method)+ " "+ (description != null && description.length() > 0 ? "(\""
+								+ description + "\")": "")+ "</a>"
 								+ (null == testInstanceName ? "" : "<br>("
 										+ testInstanceName + ")") + "</td>"
 										+ "<td class=\"numi\" style=\"text-align:left;padding-right:2em\">" + firstLine+"<br/></td>"
@@ -244,7 +274,8 @@ public class CustomizedReport implements IReporter{
 	/** Starts and defines columns result summary table */
 	private void startResultSummaryTable(String style) {
 		tableStart(style, "summary");
-		writer.println("<tr><th>Class</th>"
+		writer.println("<h2 align='center'>Test Execution Detailed</h2>");
+		writer.println("<tr><th>Suite</th>"
 				+ "<th>Method</th><th>Exception Info</th><th>Start Time </th><th>Execution Time<br/>(hh:mm:ss)</th></tr>");
 		m_row = 0;
 	}
@@ -395,18 +426,21 @@ public class CustomizedReport implements IReporter{
 	@SuppressWarnings("unused")
 	public void generateSuiteSummaryReport(List<ISuite> suites) {
 		tableStart("testOverview", null);
+		writer.print("<h1></h1>");
+		writer.print("<tr><th colspan='6'style=text-align:center bgcolor='#FFE4E1'> Test Execution Summary</th></tr>");
 		writer.print("<tr>");
-		tableColumnStart("Test");
-		tableColumnStart("Total<br/>Methods");
-		tableColumnStart("Methods<br/>Passed");
-		tableColumnStart("Skipped");
+		tableColumnStart("Module :: Suite");
+		tableColumnStart("Total");
+		tableColumnStart("Executed");
+		tableColumnStart("Passed");
 		tableColumnStart("Failed");
-	//	tableColumnStart("Browser");
-	//	tableColumnStart("Start<br/>Time");
-	//	tableColumnStart("End<br/>Time");
-		tableColumnStart("Total<br/>Time(hh:mm:ss)");
-	//	tableColumnStart("Included<br/>Groups");
-//		tableColumnStart("Excluded<br/>Groups");
+		tableColumnStart("Skipped");
+		//tableColumnStart("Browser");
+		//tableColumnStart("Start<br/>Time");
+		//tableColumnStart("End<br/>Time");
+		//tableColumnStart("Total<br/>Time(hh:mm:ss)");
+		//tableColumnStart("Included<br/>Groups");
+		//tableColumnStart("Excluded<br/>Groups");
 
 		writer.println("</tr>");
 		NumberFormat formatter = new DecimalFormat("#,##0.0");
@@ -419,27 +453,32 @@ public class CustomizedReport implements IReporter{
 		long time_end = Long.MIN_VALUE;
 		m_testIndex = 1;
 		for (ISuite suite : suites) {
-			if (suites.size() >= 1) {
+			/*if (suites.size() >= 1) {
 				titleRow(suite.getName(), 10);
-			}
+			}*/
 			Map<String, ISuiteResult> tests = suite.getResults();
 			for (ISuiteResult r : tests.values()) {
 				qty_tests += 1;
 				ITestContext overview = r.getTestContext();
 				
-				startSummaryRow(overview.getName());
-				int q = getMethodSet(overview.getPassedTests(), suite).size();
-				qty_pass_m += q;
-				summaryCell(q, Integer.MAX_VALUE);
-				q = getMethodSet(overview.getSkippedTests(), suite).size();
-				qty_skip += q;
-				summaryCell(q, 0);
-				q = getMethodSet(overview.getFailedTests(), suite).size();
-				qty_fail += q;
-				summaryCell(q, 0);
+				startSummaryRow(suite.getName() + " :: " +overview.getName());
+				int pass_m = getMethodSet(overview.getPassedTests(), suite).size();
+				qty_pass_m += pass_m;
+				
+				int skip_m = getMethodSet(overview.getSkippedTests(), suite).size();
+				qty_skip += skip_m;
+				
+				int fail_m = getMethodSet(overview.getFailedTests(), suite).size();
+				qty_fail += fail_m;
+				
+				summaryCell(pass_m + skip_m + fail_m, Integer.MAX_VALUE);
+				summaryCell(pass_m + fail_m, Integer.MAX_VALUE);
+				summaryCell(pass_m, Integer.MAX_VALUE);
+				summaryCell(fail_m, 0);
+				summaryCell(skip_m, Integer.MAX_VALUE);
 				
 				// Write OS and Browser
-				summaryCell(suite.getParameter("browserType"), true);
+				/*summaryCell(suite.getParameter("browserType"), true);
 				writer.println("</td>");
 							
 				SimpleDateFormat summaryFormat = new SimpleDateFormat("hh:mm:ss");
@@ -454,21 +493,26 @@ public class CustomizedReport implements IReporter{
 				summaryCell(timeConversion((overview.getEndDate().getTime() - overview.getStartDate().getTime()) / 1000), true);
 				
 				summaryCell(overview.getIncludedGroups());
-				summaryCell(overview.getExcludedGroups());
+				summaryCell(overview.getExcludedGroups());*/
 				writer.println("</tr>");
 				m_testIndex++;
 			}
 		}
-		if (qty_tests > 1) {
+		
+		//To get grandtotal of all suites
+		if (qty_tests > 0) {
 			writer.println("<tr class=\"total\"><td>Total</td>");
+			summaryCell(qty_pass_m + qty_skip + qty_fail, Integer.MAX_VALUE);
+			summaryCell(qty_pass_m + qty_fail, Integer.MAX_VALUE);
 			summaryCell(qty_pass_m, Integer.MAX_VALUE);
-			summaryCell(qty_skip, 0);
 			summaryCell(qty_fail, 0);
-			summaryCell(" ", true);
-			summaryCell(" ", true);
-			summaryCell(" ", true);
-			summaryCell(timeConversion(((time_end - time_start) / 1000)), true);
-			writer.println("<td colspan=\"3\">&nbsp;</td></tr>");
+			summaryCell(qty_skip, Integer.MAX_VALUE);
+			//summaryCell(" ", true);
+			//summaryCell(" ", true);
+			//summaryCell(" ", true);
+			//summaryCell(timeConversion(((time_end - time_start) / 1000)), true);
+			//writer.println("<td colspan=\"3\">&nbsp;</td></tr>");
+			writer.println("</tr>");
 		}
 		writer.println("</table>");
 	}
@@ -491,8 +535,8 @@ public class CustomizedReport implements IReporter{
 		m_row += 1;
 		writer.print("<tr"
 				+ (m_row % 2 == 0 ? " class=\"stripe\"" : "")
-				+ "><td style=\"text-align:left;padding-right:2em\"><a href=\"#t"
-				+ m_testIndex + "\"><b>" + label + "</b></a>" + "</td>");
+				+ "><td style=\"text-align:left;padding-right:2em\"><!--a href=\"#t"
+				+ m_testIndex + "\"--><b>" + label + "</b><!--/a-->" + "</td>");
 		
 	}
 
@@ -603,7 +647,7 @@ public class CustomizedReport implements IReporter{
 	}
 
 	private class TestResultsSorter implements Comparator<ITestResult> {
-	
+		
 		public int compare(ITestResult obj1, ITestResult obj2) {
 			int result = obj1.getTestClass().getName().compareTo(obj2.getTestClass().getName());
 			if (result == 0) {

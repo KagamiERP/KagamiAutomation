@@ -3,13 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.kagami.testconfig.TestPreconditions">
+      <class name="com.kagami.uiTests.demo_TestCases">
         <methods>
-          <include name="presuite"/>
-          <include name="main"/>
-          <include name="postsuite"/>
+          <include name="register"/>
         </methods>
-      </class> <!-- com.kagami.testconfig.TestPreconditions -->
+      </class> <!-- com.kagami.uiTests.demo_TestCases -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

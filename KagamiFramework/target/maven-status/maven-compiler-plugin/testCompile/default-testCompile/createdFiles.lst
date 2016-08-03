@@ -1,2 +1,16 @@
+com\kagami\library\CustomizedReport.class
+com\kagami\uiTests\ExcelReadWrite.class
+com\kagami\uiTests\XpathValue.class
+com\kagami\library\Global.class
+com\kagami\library\CustomizedReport$TestResultsSorter.class
+com\kagami\testconfig\TestPreconditions$1.class
+com\kagami\uiTests\testExcelsheetReader.class
+com\kagami\testconfig\TestPreconditions.class
+com\kagami\library\CustomizedReport$TestSorter.class
+com\kagami\library\CustomizedReport$TestMethodSorter.class
+com\kagami\uiTests\TestCase001.class
 com\kagami\pagerepo\KagamiPageRepository.class
+com\kagami\library\datePicker.class
+com\kagami\uiTests\ApplicationUi.class
+com\kagami\uiTests\demo_TestCases.class
 com\kagami\library\CustomizedReport$1.class

@@ -10,7 +10,7 @@
     <classes>
      <!--  <class name="com.kagami.testconfig.TestPreconditions"/> -->
   <!--     <class name="com.kagami.uiTests.ApplicationUi"/>--> 
-      <class name="com.kagami.testconfig.TestPreconditions"/>
+  <!--     <class name="com.kagami.uiTests.ExcelReadWrite"/>--> 
       
       
     </classes>

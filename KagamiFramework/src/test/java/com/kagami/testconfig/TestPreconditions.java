@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipOutputStream;
 
 import javax.mail.Authenticator;
@@ -28,12 +29,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.tools.zip.ZipEntry;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.io.Zip;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
+
+import com.kagami.library.Global;
 
 /** Summary 
 Author Name: Manish Anand
@@ -48,7 +56,7 @@ public class TestPreconditions {
 	public WebDriver driver;
 	
 	@BeforeSuite
-	public void presuite() throws EncryptedDocumentException, InvalidFormatException, IOException
+	public void presuite() throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
 	{
 		Date d = new Date();
 	    String date = d.toString().replace(":", "_");
@@ -64,37 +72,63 @@ public class TestPreconditions {
 	    {
 	    	e.printStackTrace();
 	    }
-    //   browserType("firefox");
-	//   browserType("chrome");
-	   // browserType("ie");
 	    
-	    }
+	    //  browserType("firefox");
+	     // browserType("chrome");
+		   // browserType("ie");
+	}	 
+	    
+	  /*  
+	    WebDriver driver = new FirefoxDriver();
+		String url = "http://52.37.98.209:8080/kagami-erp-generated/" ;
+		driver.get(url);
+		Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+		String browserName = cap.getBrowserName();
+		String browserVersion = cap.getVersion();
+		String os = System.getProperty("os.name").toLowerCase();
+	
+*/		
 
-	@Test
-	public void test1()
-	{
-		System.out.println("This is test 1");
-	}
+		//private void browserType(String string)
 	
-	@Test
-	public void test2()
-	{
-		System.out.println("This is test 2");
-	}
-	
-	@Test
-	public void test3() throws InterruptedException
-	{
-		System.out.println("This is test 3");
-       
-	}
-	
-	@Test
-	public void test4() throws InterruptedException
-	{
-		System.out.println("This is test 4... All the best");
-       
-	}
+		//public String browserName;
+		@Test
+		public WebDriver browserType(WebDriver driver, String browserName) throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
+			{
+			if(browserName == "firefox")
+			{
+				driver = new FirefoxDriver();
+			}
+			
+			else if(browserName.equalsIgnoreCase("chrome"))
+				{
+				    System.setProperty("webdriver.chrome.driver","./Browser_exe/chromedriver.exe");
+					driver = new ChromeDriver();
+				}
+			else
+			{
+				System.setProperty("webdriver.ie.driver","./Browser_exe/IEDriverServer.exe");
+				driver = new InternetExplorerDriver();
+			}
+			
+			
+			String url = Global.sUrl;
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			driver.get(url);
+			Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+			String browserType = cap.getBrowserName();
+			String browserVersion = cap.getVersion();
+			String os = System.getProperty("os.name").toLowerCase();
+			postsuite(browserType, browserVersion, os, url);
+			return driver;
+
+			/*KagamiPageRepository  kagamiUiElement = new KagamiPageRepository(driver);
+			kagamiUiElement.enterEmail("admin").enterPassword("admin").signIn();
+			kagamiUiElement.createApplication();*/
+			
+			
+		}
 
 
 /** Summary 
@@ -128,6 +162,8 @@ Objective: This method will delete temp data after executing test suite
 	
 
 
+
+
 /** Summary 
 Author Name: Manish Anand
 Method: Postsuite
@@ -135,20 +171,20 @@ Objective: This method will help to send the backup of previously executed repor
 Note : Do not change / please talk to author before you make any changes to the below code.
 */
 
-	
 	@AfterSuite
-	public void postsuite() throws EncryptedDocumentException, InvalidFormatException, IOException, InterruptedException, AddressException, MessagingException
+	public void postsuite(String browserName, String browserVersion, String os, String url) throws EncryptedDocumentException, InvalidFormatException, IOException, InterruptedException, AddressException, MessagingException
 	{
-		Thread.sleep(10000);
-		//SMTP configuration
+		
+	    	  Thread.sleep(9000);
+		      //SMTP configuration
 				String host = "smtp.office365.com";
 				String port = "587";
 				final String username = "kagami.qa@kagamierp.com";
 				final String password = "BitKemy@1234";
 				
 				//Recipients
-				String toAddress = "mallinath.mulage@kagamierp.com";
-				String ccAddress = "manish.anand@kagamierp.com";
+				String toAddress = "manish.anand@kagamierp.com";
+			//	String ccAddress = "manish.anand@kagamierp.com";
 				//String bccAddress = "mallinath.mulage@kagamierp.com";*/
 				
 				//SMTP server properties
@@ -169,12 +205,12 @@ Note : Do not change / please talk to author before you make any changes to the 
 				Session session = Session.getInstance(prop, auth);
 				
 				//creates email
-				String subject = "Test for Sending mail"+now();
+				String subject = "Automation test result for TestCycle_"+now();
 				Message msg = new MimeMessage(session);
 				msg.setFrom(new InternetAddress(username));
 				InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
-				msg.setRecipients(Message.RecipientType.CC,InternetAddress.parse(ccAddress));
+			//	msg.setRecipients(Message.RecipientType.CC,InternetAddress.parse(ccAddress));
 				//msg.setRecipients(Message.RecipientType.BCC,InternetAddress.parse(bccAddress));*/
 				msg.setSubject(subject);
 				msg.setSentDate(new Date());
@@ -184,12 +220,11 @@ Note : Do not change / please talk to author before you make any changes to the 
 					    + "Please find the below automation test execution details." 
 						  + "<br></br>"
 					    
-						+ "Build Information:"+ "<br></br>"
-							 +" Operating System:"+ "<br></br>"
-							 + "Browser Type & Version:" + "<br></br>" +
-							  "URL / Server: " 
-							 + "<br></br>" +
-							  "Test Type: "  + "<br></br>" 
+						+ "Build Information : "+"Sample build" + "<br></br>"
+							 +" Operating System : "+ os +"<br></br>"
+							 + "Browser Type & Version : " + browserName + " " +browserVersion +"<br></br>" +
+							  "URL / Server : " +url + "<br></br>" +
+							  "Test Type : "  + "TestCycle1" +"<br></br>" 
 									 
 				    + "<table border=1><style=width:100%>"
 				    +"<tr>"
@@ -235,7 +270,7 @@ Note : Do not change / please talk to author before you make any changes to the 
 					+"</tr>"
 					+ "</td></tr></table>"
 					+"<br></br>"
-					+"Thanks & Regards"
+					+"Thanks & Regards" +"<br>" 
 					+"<b><i>"+"Kagami QA Team"+"<i><b>"
 					+"<br></br>"
 				    + "Note: For more information you can download and open the attached zip file." 
@@ -363,5 +398,7 @@ public void browserType(String browserName) throws EncryptedDocumentException, I
 	} 
 	*/
 			 }
-
+	
+	
+	
 }
