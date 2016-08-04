@@ -7,6 +7,8 @@ package com.kagami.library;
 	import org.openqa.selenium.support.ui.WebDriverWait;
 
 	public class Global {
+		
+		GenericMethods genericMethods = new GenericMethods();
 		public static final int iMaxRetryCount = 2;
 
 		public static WebDriver wDriver;
@@ -14,9 +16,9 @@ package com.kagami.library;
 		public static JavascriptExecutor js;
 		
 		// Selects the browser to execute
-		//public static String sBrowserType = "firefox";
+		public static String sBrowserType = "firefox";
 		//public static String sBrowserType = "IE";
-		public static String sBrowserName = "Chrome";
+		//public static String sBrowserType = "Chrome";
 		public static String sTestData="TestData//testdata demoaut.xlsx";
 		public static String BuildInfo ="samplebuild";
 		
@@ -26,10 +28,9 @@ package com.kagami.library;
 		
 		// Specifies the URL to be entered
 		public static String sUrl = "http://newtours.demoaut.com/";
-
-		
-		public static int iPopUpTimeOutms = 5000;
-		public static int iTimeOutms = 10000;
+		public String zipFileName = "./TestReport/TestReport_"+genericMethods.getcurrentDateAndTime()+".zip/";
+		public static String htmlFileForEmail = "./test-output/custom-report.html";
+		//public String date = genericMethods.getcurrentDateAndTime();
 		public static int testCasesCount = 0;
 		public static int testcasesFailCount = 0;
 		public static int testcasesPassCount = 0;

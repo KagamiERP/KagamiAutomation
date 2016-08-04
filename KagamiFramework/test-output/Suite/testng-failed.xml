@@ -6,11 +6,19 @@
   </listeners>
   <test name="Test(failed)">
     <classes>
-      <class name="com.kagami.uiTests.ApplicationUi">
+      <class name="com.kagami.testconfig.TestConfig">
         <methods>
-          <include name="LogIn"/>
+          <include name="zipSingleFile"/>
+          <include name="presuite"/>
+          <include name="main"/>
         </methods>
-      </class> <!-- com.kagami.uiTests.ApplicationUi -->
+      </class> <!-- com.kagami.testconfig.TestConfig -->
+      <class name="com.kagami.uiTests.DemoAUT">
+        <methods>
+          <include name="browserShutDown"/>
+          <include name="register"/>
+        </methods>
+      </class> <!-- com.kagami.uiTests.DemoAUT -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

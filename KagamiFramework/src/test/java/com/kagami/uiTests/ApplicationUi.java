@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 import com.kagami.library.GenericMethods;
-import com.kagami.testconfig.TestPreconditions;
+import com.kagami.testconfig.TestConfig;
 public class ApplicationUi {
 	
 	public WebDriver driver;

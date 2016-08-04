@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Driver;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -43,7 +44,6 @@ public class CustomizedReport implements IReporter{
 	private String reportTitle= "Kagami Automation Test Report";
 	private String reportFileName = "custom-report.html";
 
-	/** Creates summary of the run */
 	
 	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites,String outdir) {
 		try {
@@ -53,7 +53,6 @@ public class CustomizedReport implements IReporter{
 			e.printStackTrace();
 			return;
 		}
-
 		startHtml(writer);
 		writeReportTitle(reportTitle);
 		testEnvironmentDetails(writer);
@@ -80,17 +79,17 @@ public class CustomizedReport implements IReporter{
 				+"</tr>"
 					+"<tr>"
 				    +"<th>Browser</th>"
-				    +"<td>"+"Firefox"+"</td>"
+				    +"<td>"+Global.sBrowserType+"</td>"
 				    +"</tr>"
 				    +"<tr>"
 				    +"<th>URL</th>"
-				    +"<td>"+"http://52.37.98.209:8080/kagami-erp-generated/"+"</td>"
+				    +"<td>"+Global.sUrl+"</td>"
 				  +"</tr>"
 				+"<th>OS</th>"
-				+"<td>"+"Windows7"+"</td>"
+				+"<td>"+System.getProperty("os.name")+"</td>"
 				  +"</tr>"
 				  +"<th>Build</th>"
-					+"<td>"+""+"</td>"
+					+"<td>"+Global.BuildInfo+"</td>"
 					  +"</tr>"
 				  +"</table>"
 				+"</body>"
@@ -429,15 +428,15 @@ public class CustomizedReport implements IReporter{
 		writer.print("<h1></h1>");
 		writer.print("<tr><th colspan='6'style=text-align:center bgcolor='#FFE4E1'> Test Execution Summary</th></tr>");
 		writer.print("<tr>");
-		tableColumnStart("Module :: Suite");
-		tableColumnStart("Total");
+		tableColumnStart("Module Names:");
+		tableColumnStart("Total TC");
 		tableColumnStart("Executed");
 		tableColumnStart("Passed");
 		tableColumnStart("Failed");
 		tableColumnStart("Skipped");
 		//tableColumnStart("Browser");
-		//tableColumnStart("Start<br/>Time");
-		//tableColumnStart("End<br/>Time");
+		tableColumnStart("Start<br/>Time");
+		tableColumnStart("End<br/>Time");
 		//tableColumnStart("Total<br/>Time(hh:mm:ss)");
 		//tableColumnStart("Included<br/>Groups");
 		//tableColumnStart("Excluded<br/>Groups");
@@ -501,14 +500,14 @@ public class CustomizedReport implements IReporter{
 		
 		//To get grandtotal of all suites
 		if (qty_tests > 0) {
-			writer.println("<tr class=\"total\"><td>Total</td>");
+			writer.println("<tr class=\"total\"><td>Grand Total</td>");
 			summaryCell(qty_pass_m + qty_skip + qty_fail, Integer.MAX_VALUE);
 			summaryCell(qty_pass_m + qty_fail, Integer.MAX_VALUE);
 			summaryCell(qty_pass_m, Integer.MAX_VALUE);
 			summaryCell(qty_fail, 0);
 			summaryCell(qty_skip, Integer.MAX_VALUE);
-			//summaryCell(" ", true);
-			//summaryCell(" ", true);
+			summaryCell(" ", true);
+			summaryCell(" ", true);
 			//summaryCell(" ", true);
 			//summaryCell(timeConversion(((time_end - time_start) / 1000)), true);
 			//writer.println("<td colspan=\"3\">&nbsp;</td></tr>");

@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test name="Default test(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <listeners>
+    <listener class-name="com.kagami.library.CustomizedReport"/>
+  </listeners>
+  <test name="Test(failed)">
     <classes>
-      <class name="com.kagami.uiTests.demo_TestCases">
+      <class name="com.kagami.testconfig.TestConfig">
         <methods>
+          <include name="zipSingleFile"/>
+          <include name="presuite"/>
+          <include name="main"/>
+        </methods>
+      </class> <!-- com.kagami.testconfig.TestConfig -->
+      <class name="com.kagami.uiTests.DemoAUT">
+        <methods>
+          <include name="browserShutDown"/>
           <include name="register"/>
         </methods>
-      </class> <!-- com.kagami.uiTests.demo_TestCases -->
+      </class> <!-- com.kagami.uiTests.DemoAUT -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

@@ -4,9 +4,9 @@ package com.kagami.uiTests;
 import org.testng.annotations.Test;
 
 import com.kagami.pagerepo.KagamiPageRepository;
-import com.kagami.testconfig.TestPreconditions;
+import com.kagami.testconfig.TestConfig;
 
-public class TestCase001 extends TestPreconditions
+public class TestCase001 extends TestConfig
 
 {
 

@@ -41,6 +41,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import com.kagami.library.GenericMethods;
 import com.kagami.library.Global;
 
 /** Summary 
@@ -51,8 +52,10 @@ Note : Do not change / please talk to author before you make any changes to the 
 */
 
 @Test
-public class TestPreconditions {
+public class TestConfig {
 	
+	GenericMethods genericMethods= new GenericMethods();
+	Global global = new Global();
 	public WebDriver driver;
 	
 	@BeforeSuite
@@ -72,26 +75,9 @@ public class TestPreconditions {
 	    {
 	    	e.printStackTrace();
 	    }
-	    
-	    //  browserType("firefox");
-	     // browserType("chrome");
-		   // browserType("ie");
+	  
 	}	 
 	    
-	  /*  
-	    WebDriver driver = new FirefoxDriver();
-		String url = "http://52.37.98.209:8080/kagami-erp-generated/" ;
-		driver.get(url);
-		Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-		String browserName = cap.getBrowserName();
-		String browserVersion = cap.getVersion();
-		String os = System.getProperty("os.name").toLowerCase();
-	
-*/		
-
-		//private void browserType(String string)
-	
-		//public String browserName;
 		@Test
 		public WebDriver browserType(WebDriver driver, String browserName) throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
 			{
@@ -102,12 +88,12 @@ public class TestPreconditions {
 			
 			else if(browserName.equalsIgnoreCase("chrome"))
 				{
-				    System.setProperty("webdriver.chrome.driver","./Browser_exe/chromedriver.exe");
+				    System.setProperty("webdriver.chrome.driver",Global.sChormeDriverPath);
 					driver = new ChromeDriver();
 				}
 			else
 			{
-				System.setProperty("webdriver.ie.driver","./Browser_exe/IEDriverServer.exe");
+				System.setProperty("webdriver.ie.driver",Global.sIEDriverPath);
 				driver = new InternetExplorerDriver();
 			}
 			
@@ -122,12 +108,6 @@ public class TestPreconditions {
 			String os = System.getProperty("os.name").toLowerCase();
 			postsuite(browserType, browserVersion, os, url);
 			return driver;
-
-			/*KagamiPageRepository  kagamiUiElement = new KagamiPageRepository(driver);
-			kagamiUiElement.enterEmail("admin").enterPassword("admin").signIn();
-			kagamiUiElement.createApplication();*/
-			
-			
 		}
 
 
@@ -141,28 +121,6 @@ Objective: This method will delete temp data after executing test suite
  * @throws InterruptedException 
  * @throws MessagingException 
  * @throws AddressException 
-*/
-
-//	@AfterSuite
-//	public void postsuite() throws EncryptedDocumentException, InvalidFormatException, IOException
-//	{
-//		File fileToDelete = new File("./Temp");
-//		try
-//		{
-//			FileUtils.deleteDirectory(fileToDelete);
-//		}
-//		
-//		  catch(IOException e)
-//	    {
-//	    	e.printStackTrace();
-//	    }
-//		
-//	    
-//	    }
-	
-
-
-
 
 /** Summary 
 Author Name: Manish Anand
@@ -184,8 +142,8 @@ Note : Do not change / please talk to author before you make any changes to the 
 				
 				//Recipients
 				String toAddress = "manish.anand@kagamierp.com";
-			//	String ccAddress = "manish.anand@kagamierp.com";
-				//String bccAddress = "mallinath.mulage@kagamierp.com";*/
+				String ccAddress = "vishnu.vema@kagamierp.com";
+				String bccAddress = "mallinath.mulage@kagamierp.com";
 				
 				//SMTP server properties
 				Properties prop = new Properties();
@@ -210,8 +168,8 @@ Note : Do not change / please talk to author before you make any changes to the 
 				msg.setFrom(new InternetAddress(username));
 				InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
-			//	msg.setRecipients(Message.RecipientType.CC,InternetAddress.parse(ccAddress));
-				//msg.setRecipients(Message.RecipientType.BCC,InternetAddress.parse(bccAddress));*/
+				msg.setRecipients(Message.RecipientType.CC,InternetAddress.parse(ccAddress));
+				msg.setRecipients(Message.RecipientType.BCC,InternetAddress.parse(bccAddress));
 				msg.setSubject(subject);
 				msg.setSentDate(new Date());
 				
@@ -220,10 +178,10 @@ Note : Do not change / please talk to author before you make any changes to the 
 					    + "Please find the below automation test execution details." 
 						  + "<br></br>"
 					    
-						+ "Build Information : "+"Sample build" + "<br></br>"
+						+ "Build Information : "+Global.BuildInfo + "<br></br>"
 							 +" Operating System : "+ os +"<br></br>"
 							 + "Browser Type & Version : " + browserName + " " +browserVersion +"<br></br>" +
-							  "URL / Server : " +url + "<br></br>" +
+							  "URL / Server : " +Global.sUrl + "<br></br>" +
 							  "Test Type : "  + "TestCycle1" +"<br></br>" 
 									 
 				    + "<table border=1><style=width:100%>"
@@ -281,14 +239,16 @@ Note : Do not change / please talk to author before you make any changes to the 
 				  MimeBodyPart messageBodyPart = new MimeBodyPart();
 				  messageBodyPart.setContent(message, "text/html");
 				  // messageBodyPart
-				  // creates multi-part
+				
 				  Multipart multipart = new MimeMultipart();
 				  multipart.addBodyPart(messageBodyPart);
 				  
-				  
+				  Date d = new Date();
+				  String date = d.toString().replace(":", "_");
 				  //to zip a file		  
-				  File file = new File("./test-output/emailable-report.html");
-				 String zipFileName = "C://Users//Manish//Desktop//new/TestReport.zip";
+				  File file = new File(Global.htmlFileForEmail);
+				  String zipFileName = global.zipFileName;
+				  //String zipFileName = "./TestReport/TestReport_"+genericMethods.getcurrentDateAndTime()+".zip/";
 				  
 				 zipSingleFile(file, zipFileName); 
 			        
@@ -309,7 +269,7 @@ Note : Do not change / please talk to author before you make any changes to the 
 				  
 				  				}
 				
-			 private static void zipSingleFile(File file, String zipFileName) {
+			 public void zipSingleFile(File file, String zipFileName) {
 				
 				 try{
 					//create ZipOutputStream to write to the zip file
@@ -330,7 +290,6 @@ Note : Do not change / please talk to author before you make any changes to the 
 					 
 					 //Close the zip entry to write to zip file
 			          zos.closeEntry();
-			         //close resources
 			          zos.close();
 			          fis.close();
 			          fos.close();
@@ -340,9 +299,8 @@ Note : Do not change / please talk to author before you make any changes to the 
 			            e.printStackTrace();
 			        }
 					}
-				
-			
-			private static String now() {
+							
+			public String now() {
 				  Calendar cal = Calendar.getInstance();
 				  SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 				  return sdf.format(cal.getTime());
@@ -363,42 +321,5 @@ Note : Do not change / please talk to author before you make any changes to the 
 				  ex.printStackTrace();
 			  	}		
 
-	
-/*
-public String browserName;
-@BeforeClass
-public void browserType(String browserName) throws EncryptedDocumentException, InvalidFormatException, IOException
-	{
-	if(browserName == "firefox")
-	{
-		driver = new FirefoxDriver();
+		 }
 	}
-	
-	else if(browserName.equalsIgnoreCase("chrome"))
-		{
-		    System.setProperty("webdriver.chrome.driver","./Browser_exe/chromedriver.exe");
-			driver = new ChromeDriver();
-		}
-	else
-	{
-		System.setProperty("webdriver.ie.driver","./Browser_exe/IEDriverServer.exe");
-		driver = new InternetExplorerDriver();
-	}
-	
-	
-	String url = "http://192.168.1.55:8085/KagamiAuthService/auth/loginPage#?service=bpm&continue=http:%2F%2Flocalhost:8080%2Fkagami-erp-generated%2F";
-	driver.manage().window().maximize();
-	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	driver.get(url);
-
-	KagamiPageRepository  kagamiUiElement = new KagamiPageRepository(driver);
-	kagamiUiElement.enterEmail("admin").enterPassword("admin").signIn();
-	kagamiUiElement.createApplication();
-	
-	} 
-	*/
-			 }
-	
-	
-	
-}

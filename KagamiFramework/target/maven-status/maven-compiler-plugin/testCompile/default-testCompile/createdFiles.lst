@@ -6,6 +6,7 @@ com\kagami\library\CustomizedReport$TestResultsSorter.class
 com\kagami\testconfig\TestPreconditions$1.class
 com\kagami\uiTests\testExcelsheetReader.class
 com\kagami\testconfig\TestPreconditions.class
+com\kagami\library\GenericMethods.class
 com\kagami\library\CustomizedReport$TestSorter.class
 com\kagami\library\CustomizedReport$TestMethodSorter.class
 com\kagami\uiTests\TestCase001.class

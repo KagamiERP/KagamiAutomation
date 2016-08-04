@@ -8,8 +8,13 @@
   <test name="Test">
   
     <classes>
-     <!--  <class name="com.kagami.testconfig.TestPreconditions"/> -->
-  <!--     <class name="com.kagami.uiTests.ApplicationUi"/>--> 
+     <class name="com.kagami.testconfig.TestConfig"/> 
+      <class name="com.kagami.uiTests.DemoAUT"/>
+      <class name="com.kagami.uiTests.DemoAUT2"/>
+      <class name="com.kagami.uiTests.DemoAUT3"/>
+      <class name="com.kagami.uiTests.DemoAUT4"/>
+      <class name="com.kagami.uiTests.DemoAUT5"/>
+      
   <!--     <class name="com.kagami.uiTests.ExcelReadWrite"/>--> 
       
       
