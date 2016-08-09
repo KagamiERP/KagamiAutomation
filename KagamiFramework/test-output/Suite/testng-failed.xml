@@ -3,8 +3,10 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <listeners>
     <listener class-name="com.kagami.library.CustomizedReport"/>
+    <listener class-name="com.kagami.library.RetryListener"/>
+    <listener class-name="com.kagami.library.TestListener"/>
   </listeners>
-  <test name="Test(failed)">
+  <test name="Functional Test (failed)">
     <classes>
       <class name="com.kagami.testconfig.TestConfig">
         <methods>
@@ -13,12 +15,12 @@
           <include name="main"/>
         </methods>
       </class> <!-- com.kagami.testconfig.TestConfig -->
-      <class name="com.kagami.uiTests.DemoAUT">
+      <class name="com.kagami.functionaltest.Demo2">
         <methods>
-          <include name="browserShutDown"/>
           <include name="register"/>
+          <include name="browserClose"/>
         </methods>
-      </class> <!-- com.kagami.uiTests.DemoAUT -->
+      </class> <!-- com.kagami.functionaltest.Demo2 -->
     </classes>
-  </test> <!-- Test(failed) -->
+  </test> <!-- Functional Test (failed) -->
 </suite> <!-- Failed suite [Suite] -->

@@ -12,8 +12,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class datePicker {
-	public boolean PickDate(String sTestdate) throws Exception{
-	 	//sExpdate="2015-02-25";
  WebDriver driver;
  WebElement datePicker;
  List<WebElement> noOfColumns;

@@ -1,15 +1,23 @@
 package com.kagami.library;
 
-	import org.openqa.selenium.JavascriptExecutor;
-	import org.openqa.selenium.WebDriver;
-	import org.openqa.selenium.firefox.FirefoxProfile;
-	import org.openqa.selenium.firefox.internal.ProfilesIni;
-	import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 	public class Global {
 		
+	
+		//obj.postsuite(browserType, browserVersion, os, url);*/
+	
+		
 		GenericMethods genericMethods = new GenericMethods();
-		public static final int iMaxRetryCount = 2;
+	//	public static final int iMaxRetryCount = 1;
 
 		public static WebDriver wDriver;
 		public static WebDriverWait wait;
@@ -28,6 +36,7 @@ package com.kagami.library;
 		
 		// Specifies the URL to be entered
 		public static String sUrl = "http://newtours.demoaut.com/";
+		//public static String sUrl = "https://encodable.com/uploaddemo/";
 		public String zipFileName = "./TestReport/TestReport_"+genericMethods.getcurrentDateAndTime()+".zip/";
 		public static String htmlFileForEmail = "./test-output/custom-report.html";
 		//public String date = genericMethods.getcurrentDateAndTime();
@@ -45,5 +54,10 @@ package com.kagami.library;
 
 		public static ProfilesIni allProfiles;
 		public static FirefoxProfile myProfile; 
-
+		
+		public String date(){
+		Date d = new Date();
+	    String date = d.toString().replace(":", "_");
+	    return date;
 	}
+}

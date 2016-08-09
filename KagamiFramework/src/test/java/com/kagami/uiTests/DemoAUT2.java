@@ -1,20 +1,10 @@
 package com.kagami.uiTests;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import com.kagami.library.GenericMethods;
@@ -34,9 +24,9 @@ public class DemoAUT2 {
 
 		driver = testPreconditions.browserType(driver, Global.sBrowserType);
 		
-		Map<String, List<String>> readMultipleTestData = genericMethods.readMultipleTestData(Global.sTestData, "Sheet1");
+		Map<String, List<String>> readMultipleTestData = genericMethods.readMultipleTestData(Global.sTestData, "Sheet3");
 		
-		List<String> firstName = readMultipleTestData.get("FirstName");
+		List<String> firstName = readMultipleTestData.get("FistName");
 		List<String> lastName = readMultipleTestData.get("LastName");
 		List<String> phone = readMultipleTestData.get("Phone");
 		List<String> email = readMultipleTestData.get("Email");
@@ -73,10 +63,6 @@ public class DemoAUT2 {
 		
 		
 	}
-	@AfterClass
-	public void browserShutDown()
-	{
-		driver.close();
-	}
+
 
 }

@@ -1,82 +1,57 @@
 package com.kagami.uiTests;
-
+//AutoIT
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import com.kagami.library.GenericMethods;
 import com.kagami.library.Global;
 import com.kagami.testconfig.TestConfig;
 
-public class DemoAUT {
-	
+public class DemoAUT1 {
 	private WebDriver driver=null;
-	GenericMethods genericMethods = new GenericMethods();
 	TestConfig testPreconditions = new TestConfig();
-	XpathValue xpathValue = new XpathValue();
-	
 	@Test
-	public void register() throws Exception {
-		// TODO Auto-generated method stub
-
-		driver = testPreconditions.browserType(driver, Global.sBrowserType);
+	public void uploadFile() throws EncryptedDocumentException, AddressException, InvalidFormatException, IOException, InterruptedException, MessagingException {
+	
+		String sFileName = "C:\\Users\\Manish\\Desktop\\just4Compare\\test.txt";
 		
-		Map<String, List<String>> readMultipleTestData = genericMethods.readMultipleTestData(Global.sTestData, "Sheet1");
-		
-		List<String> firstName = readMultipleTestData.get("FirstName");
-		List<String> lastName = readMultipleTestData.get("LastName");
-		List<String> phone = readMultipleTestData.get("Phone");
-		List<String> email = readMultipleTestData.get("Email");
-		List<String> address1 = readMultipleTestData.get("Address1");
-		List<String> address2 = readMultipleTestData.get("Address2");
-		List<String> city = readMultipleTestData.get("City");
-		List<String> state = readMultipleTestData.get("State");
-		List<String> postalCode = readMultipleTestData.get("PostalCode");
-		//List<String> country = readMultipleTestData.get("Country");
-		List<String> userName = readMultipleTestData.get("UserName");
-		List<String> password = readMultipleTestData.get("Password");
-		List<String> confirmPassword = readMultipleTestData.get("ConfirmPassword");
-		//int size = readMultipleTestData.size();
-		
-		for (int i = 0; i < 3; i++) {
-			genericMethods.clickElement(driver, By.linkText("REGISTER"));	
-		genericMethods.enterText(driver, (xpathValue.firstName), firstName.get(i));
-		genericMethods.enterText(driver, (xpathValue.lastName), lastName.get(i));
-		genericMethods.enterText(driver, (xpathValue.phone), phone.get(i));
-		genericMethods.enterText(driver, (xpathValue.userName), email.get(i));
-		genericMethods.enterText(driver, (xpathValue.address1), address1.get(i));
-		genericMethods.enterText(driver, (xpathValue.address2), address2.get(i));
-		genericMethods.enterText(driver, (xpathValue.city), city.get(i));
-		genericMethods.enterText(driver, (xpathValue.state), state.get(i));
-		genericMethods.enterText(driver, (xpathValue.postal), postalCode.get(i));
-		//genericMethods.enterText(driver, (xpathValue.country), country.get(0));
-		genericMethods.enterText(driver, (xpathValue.email), userName.get(i));
-		genericMethods.enterText(driver, (xpathValue.password), password.get(i));
-		genericMethods.enterText(driver, (xpathValue.confirmPassword), confirmPassword.get(i));
-		
-		genericMethods.clickElement(driver, By.linkText("REGISTER"));
-		
+		driver = testPreconditions.browserType(driver,Global.sBrowserType);
+	    StringSelection ss = new StringSelection(sFileName);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+		Robot robot = null;
+		try {
+			robot = new Robot();
+			WebElement ele = driver.findElement(By.id("uploadname1"));
+			ele.click();
+			Thread.sleep(3000);
+		//	Runtime.getRuntime().exec("C:\\Users\\Manish\\Desktop\\just4Compare\\test.txt");
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-	}
-	@AfterClass
-	public void browserShutDown()
-	{
-		driver.close();
 	}
 
 }

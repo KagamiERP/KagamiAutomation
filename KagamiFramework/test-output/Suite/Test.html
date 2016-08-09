@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>0/1/2</td>
+<td>Tests passed/Failed/Skipped:</td><td>3/1/2</td>
 </tr><tr>
-<td>Started on:</td><td>Thu Aug 04 17:41:11 IST 2016</td>
+<td>Started on:</td><td>Thu Aug 04 18:51:55 IST 2016</td>
 </tr>
-<tr><td>Total time:</td><td>26 seconds (26838 ms)</td>
+<tr><td>Total time:</td><td>27 seconds (27845 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,14 +75,14 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='com.kagami.uiTests.DemoAUT.register()'><b>register</b><br>Test class: com.kagami.uiTests.DemoAUT</td>
+<td title='com.kagami.uiTests.DemoAUT2.register()'><b>register</b><br>Test class: com.kagami.uiTests.DemoAUT2</td>
 <td><div><pre>java.lang.NullPointerException
 	at com.kagami.library.GenericMethods.readMultipleTestData(GenericMethods.java:606)
-	at com.kagami.uiTests.DemoAUT.register(DemoAUT.java:37)
-... Removed 24 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1086849943", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1086849943'><pre>java.lang.NullPointerException
+	at com.kagami.uiTests.DemoAUT2.register(DemoAUT2.java:37)
+... Removed 24 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace177104018", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace177104018'><pre>java.lang.NullPointerException
 	at com.kagami.library.GenericMethods.readMultipleTestData(GenericMethods.java:606)
-	at com.kagami.uiTests.DemoAUT.register(DemoAUT.java:37)
+	at com.kagami.uiTests.DemoAUT2.register(DemoAUT2.java:37)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -108,8 +108,31 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:152)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
 </pre></div></td>
-<td>26</td>
-<td>com.kagami.uiTests.DemoAUT@30b8a058</td></tr>
+<td>27</td>
+<td>com.kagami.uiTests.DemoAUT2@9660f4e</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.kagami.uiTests.DemoAUT1.print()'><b>print</b><br>Test class: com.kagami.uiTests.DemoAUT1</td>
+<td></td>
+<td>0</td>
+<td>com.kagami.uiTests.DemoAUT1@7c29daf3</td></tr>
+<tr>
+<td title='com.kagami.uiTests.DemoAUT3.print()'><b>print</b><br>Test class: com.kagami.uiTests.DemoAUT3</td>
+<td></td>
+<td>0</td>
+<td>com.kagami.uiTests.DemoAUT3@5a8806ef</td></tr>
+<tr>
+<td title='com.kagami.uiTests.DemoAUT4.print()'><b>print</b><br>Test class: com.kagami.uiTests.DemoAUT4</td>
+<td></td>
+<td>0</td>
+<td>com.kagami.uiTests.DemoAUT4@6c49835d</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-skipped'>
 <tr><td colspan='4' align='center'><b>SKIPPED TESTS</b></td></tr>
@@ -122,8 +145,8 @@ function toggleAllBoxes() {
 <td title='com.kagami.testconfig.TestConfig.main()'><b>main</b><br>Test class: com.kagami.testconfig.TestConfig</td>
 <td><div><pre>org.testng.TestNGException: 
 Method main requires 1 parameters but 0 were supplied in the @Test annotation.
-... Removed 23 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace352359770", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace352359770'><pre>org.testng.TestNGException: 
+... Removed 23 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1121453612", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1121453612'><pre>org.testng.TestNGException: 
 Method main requires 1 parameters but 0 were supplied in the @Test annotation.
 	at org.testng.internal.Parameters.checkParameterTypes(Parameters.java:191)
 	at org.testng.internal.Parameters.createParameters(Parameters.java:127)
@@ -150,13 +173,13 @@ Method main requires 1 parameters but 0 were supplied in the @Test annotation.
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
 </pre></div></td>
 <td>0</td>
-<td>com.kagami.testconfig.TestConfig@68bbe345</td></tr>
+<td>com.kagami.testconfig.TestConfig@4bbfb90a</td></tr>
 <tr>
 <td title='com.kagami.testconfig.TestConfig.zipSingleFile()'><b>zipSingleFile</b><br>Test class: com.kagami.testconfig.TestConfig</td>
 <td><div><pre>org.testng.TestNGException: 
 Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test annotation.
-... Removed 23 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace699780352", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace699780352'><pre>org.testng.TestNGException: 
+... Removed 23 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace213193302", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace213193302'><pre>org.testng.TestNGException: 
 Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test annotation.
 	at org.testng.internal.Parameters.checkParameterTypes(Parameters.java:191)
 	at org.testng.internal.Parameters.createParameters(Parameters.java:127)
@@ -183,7 +206,7 @@ Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test anno
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
 </pre></div></td>
 <td>0</td>
-<td>com.kagami.testconfig.TestConfig@68bbe345</td></tr>
+<td>com.kagami.testconfig.TestConfig@4bbfb90a</td></tr>
 </table><p>
 </body>
 </html>

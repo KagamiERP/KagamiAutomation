@@ -1,5 +1,11 @@
 package com.kagami.library;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,13 +13,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -24,18 +30,17 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.server.handler.SendKeys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 /** Summary 
 Author Name: Vishnu Reddy
@@ -53,6 +58,9 @@ public class GenericMethods
 	private WebDriverWait wait;
 	private Logger logger1 = Logger.getLogger("Wait");
 	private static Map<String, String> objMap = null;
+	private WebElement datePicker;
+	private List<WebElement> noOfColumns;
+	private WebElement element;
  
 /** 
 Summary: About Click Operations
@@ -599,20 +607,122 @@ Objective: This method will define the Click operations performed on the objects
 	        int rowCount = sheet.getLastRowNum();
 	        Row row = sheet.getRow(0);
 	        int colCount = row.getLastCellNum();
-	        for(int iCol =0; iCol< colCount; iCol++){
+	        for(int iCol =1; iCol< colCount; iCol++){
 	        	List<String> listData = new ArrayList<String>();
 	        	String sKey = sheet.getRow(0).getCell(iCol).toString();
 	        	for(int iRow=1; iRow<= rowCount; iRow++){
+	        	String testCaseStatus = sheet.getRow(iRow).getCell(0).toString().trim();
+	        		if(testCaseStatus.equalsIgnoreCase("Yes")){
 	        	String sValue = sheet.getRow(iRow).getCell(iCol).toString();
 	        	listData.add(sValue);
+	        		}
+	        		if(testCaseStatus.equalsIgnoreCase("No")){
+	        			continue;
+	        		}
 	        	}
 	        	testData.put(sKey, listData);
 	        	System.out.println(sKey+listData);
 	        }
 			return testData;
-	       
 	 }
 	 
+	 /** 
+		Summary: About Cell Type in Excel sheet
+		Author Name: Vishnu Reddy
+		Objective: This method will get the data from Excel Sheet depending upon the Cell Type */
+	 
+	 public boolean PickDate(WebDriver wDriver, String sTestdate) throws Exception{
+		 	//sExpdate="2015-02-25";
+	 WebDriver driver;
+	 List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	 // Expected Date, Month and Year
+	 boolean dateNotFound;
+
+	 //driver.findElement(By.xpath("//input[@id='datepicker']")).click();
+	  dateNotFound = true;
+	  
+	  //Set your expected date, month and year.  
+	 String expDate = null;
+	 String expMonth= null;
+	 String expYear = null;
+	 
+	 int iExpMonth=Integer.parseInt(expMonth);
+	 int iExpYear=Integer.parseInt(expYear);
+	 int iExpDate=Integer.parseInt(expDate);
+	  
+	  //This loop will be executed continuously till dateNotFound Is true.
+	  while(dateNotFound)
+	  { 
+	   //Retrieve current selected month name from date picker popup.
+	   String calMonth = wDriver.findElement(By.className("ui-datepicker-month")).getText();
+	   //Retrieve current selected year name from date picker popup.
+	   String calYear = wDriver.findElement(By.className("ui-datepicker-year")).getText();
+	   
+	   //If current selected month and year are same as expected month and year then go Inside this condition.
+	   if(monthList.indexOf(calMonth)+1 == iExpMonth && (iExpYear == Integer.parseInt(calYear)))
+	   {
+	    //Call selectDate function with date to select and set dateNotFound flag to false.
+	    selectDate(wDriver, expDate);
+	    dateNotFound = false;
+	   }
+	   //If current selected month and year are less than expected month and year then go Inside this condition.
+	   else if(monthList.indexOf(calMonth)+1 < iExpMonth && (iExpYear == Integer.parseInt(calYear)) || iExpYear > Integer.parseInt(calYear))
+	   {
+	    //Click on next button of date picker.
+		   wDriver.findElement(By.xpath(".//*[@id='ui-datepicker-div']/div/a[2]/span")).click();
+	   }
+	   //If current selected month and year are greater than expected month and year then go Inside this condition.
+	   else if(monthList.indexOf(calMonth)+1 > iExpMonth && (iExpYear == Integer.parseInt(calYear)) || iExpYear < Integer.parseInt(calYear))
+	   {
+	    //Click on previous button of date picker.
+		   wDriver.findElement(By.xpath(".//*[@id='ui-datepicker-div']/div/a[1]/span")).click();
+	   }
+	  }
+	  Thread.sleep(3000);
+	return dateNotFound;
+	 } 
+	 
+	 public void selectDate(WebDriver wDriver, String date)
+	 {
+		 
+	  datePicker = wDriver.findElement(By.id("ui-datepicker-div")); 
+	  noOfColumns=datePicker.findElements(By.tagName("td"));
+
+	  //Loop will rotate till expected date not found.
+	  for (WebElement cell: noOfColumns){
+	   //Select the date from date picker when condition match.
+	   if (cell.getText().equals(date)){
+	    cell.findElement(By.linkText(date)).click();
+	    break;
+	   }
+	  }
+	 }
+	 
+	 /** 
+		Summary: About Scroll down
+		Author Name: Vishnu Reddy
+		Objective: This method will Scroll Down the Web Page */
+	 
+	 public boolean scrollDown(WebDriver wDriver, By objLocator) {
+			try {
+				 visibilityStatus =ElementVisibility(wDriver, objLocator);  
+				 if(visibilityStatus){
+				WebElement scroll = wDriver.findElement(objLocator);
+				scroll.sendKeys(Keys.PAGE_DOWN);
+				log.info("The Web Page with element "+objLocator+" has been scrolled down");
+				   }
+				return true;
+			} catch (Exception e) {
+				log.info("Unable to perform scroll down on the element "+objLocator+"");			
+			}
+			return false;
+		}
+	 
+	 /** 
+		Summary: About Cell Type in Excel sheet
+		Author Name: Vishnu Reddy
+		Objective: This method will get the data from Excel Sheet depending upon the Cell Type */
+	
 	 public String CellToString(HSSFCell cell) {
 		 int type = cell.getCellType();
 		 Object result = null;
@@ -645,92 +755,100 @@ Objective: This method will define the Click operations performed on the objects
 		 }
 		 return result.toString();
 		 }
-	 
-	 
-	/* public boolean PickDate(String sTestdate) throws Exception{
-		 	//sExpdate="2015-02-25";
-	 WebDriver driver;
-	 WebElement datePicker;
-	 List<WebElement> noOfColumns;
-	 List<String> monthList = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-	 // Expected Date, Month and Year
-	 int expMonth;
-	 int expYear;
-	 String expDate = null;
-	 // Calendar Month and Year
-	 String calMonth = null;
-	 String calYear = null;
-	 boolean dateNotFound;
 
-	 @BeforeTest
-	 public void start(){
-	     driver = new FirefoxDriver();
-	     driver.manage().window().maximize();
-	     driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
-	 }
-
-	 @Test
-	 public void pickExpDate(String sTestdate){
-
-	  driver.get("http://only-testing-blog.blogspot.in/2014/09/selectable.html");
-	  //Click on date text box to open date picker popup.
-	  driver.findElement(By.xpath("//input[@id='datepicker']")).click();
-	  dateNotFound = true;
-	  
-	  //Set your expected date, month and year.  
-	 String expDate = null;
-	 String expMonth= null;
-	 String expYear = null;
+	/** 
+		Summary: About Upload File
+		Author Name: Vishnu Reddy
+		Objective: This method will Upload the File from local drive to Web Page */
 	 
-	 int iExpMonth=Integer.parseInt(expMonth);
-	 int iExpYear=Integer.parseInt(expYear);
-	 int iExpDate=Integer.parseInt(expDate);
-	  
-	  //This loop will be executed continuously till dateNotFound Is true.
-	  while(dateNotFound)
-	  { 
-	   //Retrieve current selected month name from date picker popup.
-	   calMonth = driver.findElement(By.className("ui-datepicker-month")).getText();
-	   //Retrieve current selected year name from date picker popup.
-	   calYear = driver.findElement(By.className("ui-datepicker-year")).getText();
-	   
-	   //If current selected month and year are same as expected month and year then go Inside this condition.
-	   if(monthList.indexOf(calMonth)+1 == expMonth && (expYear == Integer.parseInt(calYear)))
-	   {
-	    //Call selectDate function with date to select and set dateNotFound flag to false.
-	    selectDate(expDate);
-	    dateNotFound = false;
-	   }
-	   //If current selected month and year are less than expected month and year then go Inside this condition.
-	   else if(monthList.indexOf(calMonth)+1 < expMonth && (expYear == Integer.parseInt(calYear)) || expYear > Integer.parseInt(calYear))
-	   {
-	    //Click on next button of date picker.
-	    driver.findElement(By.xpath(".//*[@id='ui-datepicker-div']/div/a[2]/span")).click();
-	   }
-	   //If current selected month and year are greater than expected month and year then go Inside this condition.
-	   else if(monthList.indexOf(calMonth)+1 > expMonth && (expYear == Integer.parseInt(calYear)) || expYear < Integer.parseInt(calYear))
-	   {
-	    //Click on previous button of date picker.
-	    driver.findElement(By.xpath(".//*[@id='ui-datepicker-div']/div/a[1]/span")).click();
-	   }
-	  }
-	  Thread.sleep(3000);
-	 } 
-	 
-	 public void selectDate(String date)
-	 {
-	  datePicker = driver.findElement(By.id("ui-datepicker-div")); 
-	  noOfColumns=datePicker.findElements(By.tagName("td"));
-
-	  //Loop will rotate till expected date not found.
-	  for (WebElement cell: noOfColumns){
-	   //Select the date from date picker when condition match.
-	   if (cell.getText().equals(date)){
-	    cell.findElement(By.linkText(date)).click();
-	    break;
-	   }
-	  }
-	 } 
-	}*/
-	 
+		public void uploadFile(String sFileName) {
+			StringSelection ss = new StringSelection(sFileName);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+			Robot robot = null;
+			try {
+				robot = new Robot();
+				Thread.sleep(3000);
+				robot.keyPress(KeyEvent.VK_CONTROL);
+				robot.keyPress(KeyEvent.VK_V);
+				robot.keyRelease(KeyEvent.VK_V);
+				robot.keyRelease(KeyEvent.VK_CONTROL);
+				robot.keyPress(KeyEvent.VK_ENTER);
+				robot.keyRelease(KeyEvent.VK_ENTER);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		public void saveFile(WebDriver wDriver){
+			try {
+		        Robot robot = new Robot();  
+		           Thread.sleep(2000); 	
+		           robot.keyPress(KeyEvent.VK_DOWN);  
+		           
+		           Thread.sleep(2000);  
+		           robot.keyPress(KeyEvent.VK_TAB);	
+		           Thread.sleep(2000);	
+		           robot.keyPress(KeyEvent.VK_TAB);	
+		           Thread.sleep(2000);	
+		           robot.keyPress(KeyEvent.VK_TAB);	
+		           Thread.sleep(2000);	
+		           robot.keyPress(KeyEvent.VK_ENTER);	
+		       
+		    }	
+			 catch (Exception e) {
+					log.info("Unable to perform scroll down on the element ");			
 				}
+			
+		}
+		
+		/** 
+		Summary: About Click and Wait
+		Author Name: Vishnu Reddy
+		Objective: This method will Click the Web Element and waits to perform the next action */
+		
+		public WebElement clickAndWait(WebDriver wDriver, By objLocator, long wWait){
+			try {
+				visibilityStatus = ElementVisibility(wDriver, objLocator);
+			if(visibilityStatus){
+				WebElement element = wDriver.findElement(objLocator);		
+				element.wait(wWait);
+				log.info("The WebElement "+objLocator+" was clicked and waited for"+wWait);
+			}
+			}
+			catch (Exception e) {
+				log.info("Unable to perform click and wait operation on the element "+objLocator);			
+			}
+			return element;
+		}
+		
+		/** 
+		Summary: About Switch to Frame
+		Author Name: Vishnu Reddy
+		Objective: This method will Switch from the Parent window to Child window */
+		
+		public void switchToFrame(WebDriver wDriver){
+			try{
+		String parentHandle = wDriver.getWindowHandle();
+		Set<String> PopHandle = wDriver.getWindowHandles();
+		Iterator<String> it = PopHandle.iterator();
+		String ChildHandle ="";
+		while(it.hasNext())
+		{   
+			if (it.next() != parentHandle)
+			{  
+				ChildHandle = it.next().toString();
+			}
+		}
+		wDriver.switchTo().window(ChildHandle);
+		log.info("Frame has been switched to the child window");
+		}
+		catch (Exception e) {
+			log.info("Unable to swith the frame ");			
+		}
+		}
+		}

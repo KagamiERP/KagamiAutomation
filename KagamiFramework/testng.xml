@@ -3,21 +3,32 @@
 <suite name="Suite">
    <listeners>
     <listener class-name="com.kagami.library.CustomizedReport" />
+    <listener class-name="com.kagami.library.RetryListener" />   
+   <listener class-name="com.kagami.library.TestListener" />
+   
   </listeners>
   
-  <test name="Test">
-  
+ 
+ <test name="Functional Test ">
     <classes>
-     <class name="com.kagami.testconfig.TestConfig"/> 
-      <class name="com.kagami.uiTests.DemoAUT"/>
-      <class name="com.kagami.uiTests.DemoAUT2"/>
-      <class name="com.kagami.uiTests.DemoAUT3"/>
-      <class name="com.kagami.uiTests.DemoAUT4"/>
-      <class name="com.kagami.uiTests.DemoAUT5"/>
+      <class name="com.kagami.testconfig.TestConfig"/> 
+     <class name="com.kagami.functionaltest.Demo1"/>
+      <class name="com.kagami.functionaltest.Demo2"/>
+   </classes>
+      </test> 
+ 
+  <test name="UI Test">
+  <classes>
+     <class name="com.kagami.uiTests.DemoAUT3"/>
+     <class name="com.kagami.uiTests.DemoAUT4"/> 
+     </classes> 
+      </test>
       
-  <!--     <class name="com.kagami.uiTests.ExcelReadWrite"/>--> 
+  <!--     
+    <test name="Email Sending ">
+    <classes>
+     <class name="com.kagami.emailconfiguration.EmailReporting"/>
+     </classes>
+  </test> -->
       
-      
-    </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+ </suite>

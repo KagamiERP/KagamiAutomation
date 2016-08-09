@@ -48,12 +48,12 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-Suite">
-                    <span>C:\Users\Vishnu\Documents\GitHub\KagamiFramework_4thAug\KagamiFramework\testng.xml</span>
+                    <span>C:\Users\Manish\4thAug_Automation\KagamiFramework\testng.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
                   <a href="#" class="navigator-link " panel-name="testlist-Suite">
-                    <span class="test-stats">1 test</span>
+                    <span class="test-stats">2 tests</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -90,7 +90,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">3 methods, 1 failed,  2 skipped,  </span>
+                    <span class="method-stats">7 methods, 1 failed,  3 skipped,  3 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title failed">Failed methods</span>
@@ -101,7 +101,7 @@
                     <div class="method-list-content failed suite-Suite">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.uiTests.DemoAUT" hash-for-method="register">register</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.functionaltest.Demo2" hash-for-method="register">register</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-Suite -->
@@ -120,10 +120,39 @@
                       <br/>
                       <span>
                         <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.functionaltest.Demo2" hash-for-method="register">register</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.testconfig.TestConfig" hash-for-method="zipSingleFile">zipSingleFile</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content skipped suite-Suite -->
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-Suite" class="hide-methods passed suite-Suite"> (hide)</a> <!-- hide-methods passed suite-Suite -->
+                      <a href="#" panel-name="suite-Suite" class="show-methods passed suite-Suite"> (show)</a> <!-- show-methods passed suite-Suite -->
+                    </span>
+                    <div class="method-list-content passed suite-Suite">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.uiTests.DemoAUT3" hash-for-method="demoAut3">demoAut3</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.uiTests.DemoAUT4" hash-for-method="demoAut4">demoAut4</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.kagami.functionaltest.Demo1" hash-for-method="print">print</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-Suite -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -138,7 +167,7 @@
           <div class="suite-Suite-class-failed">
             <div class="main-panel-header rounded-window-top">
               <img src="failed.png"/>
-              <span class="class-name">com.kagami.uiTests.DemoAUT</span>
+              <span class="class-name">com.kagami.functionaltest.Demo2</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
@@ -147,8 +176,7 @@
                   </a> <!-- register -->
                   <span class="method-name">register</span>
                   <div class="stack-trace">java.lang.NullPointerException
-	at com.kagami.library.GenericMethods.readMultipleTestData(GenericMethods.java:606)
-	at com.kagami.uiTests.DemoAUT.register(DemoAUT.java:37)
+	at com.kagami.functionaltest.Demo2.register(Demo2.java:56)
 ... Removed 24 stack frames
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
@@ -185,10 +213,74 @@ Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test anno
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
           </div> <!-- suite-Suite-class-skipped -->
+          <div class="suite-Suite-class-skipped">
+            <div class="main-panel-header rounded-window-top">
+              <img src="skipped.png"/>
+              <span class="class-name">com.kagami.functionaltest.Demo2</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="register">
+                  </a> <!-- register -->
+                  <span class="method-name">register</span>
+                  <div class="stack-trace">java.lang.NullPointerException
+	at com.kagami.functionaltest.Demo2.register(Demo2.java:56)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Suite-class-skipped -->
+          <div class="suite-Suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.kagami.uiTests.DemoAUT4</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="demoAut4">
+                  </a> <!-- demoAut4 -->
+                  <span class="method-name">demoAut4</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Suite-class-passed -->
+          <div class="suite-Suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.kagami.uiTests.DemoAUT3</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="demoAut3">
+                  </a> <!-- demoAut3 -->
+                  <span class="method-name">demoAut3</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Suite-class-passed -->
+          <div class="suite-Suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.kagami.functionaltest.Demo1</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="print">
+                  </a> <!-- print -->
+                  <span class="method-name">print</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Suite-class-passed -->
         </div> <!-- panel Suite -->
         <div panel-name="test-xml-Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\Vishnu\Documents\GitHub\KagamiFramework_4thAug\KagamiFramework\testng.xml</span>
+            <span class="header-content">C:\Users\Manish\4thAug_Automation\KagamiFramework\testng.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -197,13 +289,22 @@ Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test anno
 &lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Suite&quot;&gt;
   &lt;listeners&gt;
     &lt;listener class-name=&quot;com.kagami.library.CustomizedReport&quot;/&gt;
+    &lt;listener class-name=&quot;com.kagami.library.RetryListener&quot;/&gt;
+    &lt;listener class-name=&quot;com.kagami.library.TestListener&quot;/&gt;
   &lt;/listeners&gt;
-  &lt;test name=&quot;Test&quot;&gt;
+  &lt;test name=&quot;Functional Test &quot;&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.kagami.testconfig.TestConfig&quot;/&gt;
-      &lt;class name=&quot;com.kagami.uiTests.DemoAUT&quot;/&gt;
+      &lt;class name=&quot;com.kagami.functionaltest.Demo1&quot;/&gt;
+      &lt;class name=&quot;com.kagami.functionaltest.Demo2&quot;/&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- Test --&gt;
+  &lt;/test&gt; &lt;!-- Functional Test  --&gt;
+  &lt;test name=&quot;UI Test&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.kagami.uiTests.DemoAUT3&quot;/&gt;
+      &lt;class name=&quot;com.kagami.uiTests.DemoAUT4&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- UI Test --&gt;
 &lt;/suite&gt; &lt;!-- Suite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -215,7 +316,10 @@ Method zipSingleFile requires 2 parameters but 0 were supplied in the @Test anno
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Test (2 classes)</span>
+                <span class="test-name">Functional Test  (3 classes)</span>
+              </li>
+              <li>
+                <span class="test-name">UI Test (2 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -241,24 +345,40 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(3);
+data.addRows(7);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'register')
-data.setCell(0, 2, 'com.kagami.uiTests.DemoAUT')
-data.setCell(0, 3, 26804);
+data.setCell(0, 2, 'com.kagami.functionaltest.Demo2')
+data.setCell(0, 3, 29316);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'zipSingleFile')
-data.setCell(1, 2, 'com.kagami.testconfig.TestConfig')
-data.setCell(1, 3, 0);
+data.setCell(1, 1, 'register')
+data.setCell(1, 2, 'com.kagami.functionaltest.Demo2')
+data.setCell(1, 3, 26569);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'main')
-data.setCell(2, 2, 'com.kagami.testconfig.TestConfig')
-data.setCell(2, 3, 0);
+data.setCell(2, 1, 'print')
+data.setCell(2, 2, 'com.kagami.functionaltest.Demo1')
+data.setCell(2, 3, 3);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'demoAut3')
+data.setCell(3, 2, 'com.kagami.uiTests.DemoAUT3')
+data.setCell(3, 3, 1);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'demoAut4')
+data.setCell(4, 2, 'com.kagami.uiTests.DemoAUT4')
+data.setCell(4, 3, 1);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'main')
+data.setCell(5, 2, 'com.kagami.testconfig.TestConfig')
+data.setCell(5, 3, 0);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'zipSingleFile')
+data.setCell(6, 2, 'com.kagami.testconfig.TestConfig')
+data.setCell(6, 3, 0);
 window.suiteTableData['Suite']= { tableData: data, tableDiv: 'times-div-Suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 26 seconds</span>
+              <span class="suite-total-time">Total running time: 55 seconds</span>
               <div id="times-div-Suite">
               </div> <!-- times-div-Suite -->
             </div> <!-- times-div -->
@@ -291,17 +411,42 @@ return data;
               </div> <!-- configuration-suite before -->
             </div> <!-- chronological-class -->
             <div class="chronological-class">
-              <div class="chronological-class-name">com.kagami.uiTests.DemoAUT</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">com.kagami.functionaltest.Demo1</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">print</span>
+                <span class="method-start">146 ms</span>
+              </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.kagami.functionaltest.Demo2</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">register</span>
+                <span class="method-start">151 ms</span>
+              </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">register</span>
-                <span class="method-start">70 ms</span>
+                <span class="method-start">29471 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-class after">
-                <span class="method-name">browserShutDown</span>
-                <span class="method-start">26876 ms</span>
+                <span class="method-name">browserClose</span>
+                <span class="method-start">78963 ms</span>
               </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.kagami.uiTests.DemoAUT3</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">demoAut3</span>
+                <span class="method-start">79015 ms</span>
+              </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.kagami.uiTests.DemoAUT4</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">demoAut4</span>
+                <span class="method-start">79019 ms</span>
+              </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->

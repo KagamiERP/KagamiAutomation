@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Driver;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -65,7 +64,7 @@ public class CustomizedReport implements IReporter{
 	}
 
 	// Creates table with Automation Test Environment details 
-	private void testEnvironmentDetails(PrintWriter out) {
+	public void testEnvironmentDetails(PrintWriter out) {
 		String table = "<!DOCTYPE html>"+"<html>"+"<head><style>"
 				+"table, th, td { border: 1px solid black;"
 				+"border-collapse: collapse;}"
@@ -75,7 +74,7 @@ public class CustomizedReport implements IReporter{
 				+"<body>"
 				+"<table style=\"width:50%\">"
 				+"<tr>"
-				+"<th colspan='2'style=text-align:center bgcolor='#FFE4E1'> Automation Test Environment</th>"
+				+"<th colspan='2'style=text-align:center bgcolor='#2ECCFA'> Automation Test Environment</th>"
 				+"</tr>"
 					+"<tr>"
 				    +"<th>Browser</th>"
@@ -100,7 +99,7 @@ public class CustomizedReport implements IReporter{
 	}
 
 
-	protected PrintWriter createWriter(String outdir) throws IOException {
+	public PrintWriter createWriter(String outdir) throws IOException {
 		new File(outdir).mkdirs();
 		return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, reportFileName))));
 	}
@@ -109,7 +108,7 @@ public class CustomizedReport implements IReporter{
 	 * Creates a table showing the highlights of each test method with links to
 	 * the method details
 	 */
-	protected void generateMethodSummaryReport(List<ISuite> suites) {
+	public void generateMethodSummaryReport(List<ISuite> suites) {
 		m_methodIndex = 0;
 		startResultSummaryTable("methodOverview");
 		int testIndex = 1;
@@ -123,9 +122,9 @@ public class CustomizedReport implements IReporter{
 				ITestContext testContext = r2.getTestContext();
 				String testName = testContext.getName();
 				m_testIndex = testIndex;
-				resultSummary(suite, testContext.getFailedConfigurations(), testName, "Failed", " (configuration methods)");
+				resultSummary(suite, testContext.getFailedConfigurations(), testName, "Failed", testName);
 				resultSummary(suite, testContext.getFailedTests(), testName, "Failed", "");
-				resultSummary(suite, testContext.getSkippedConfigurations(), testName, "Skipped", " (configuration methods)");
+				resultSummary(suite, testContext.getSkippedConfigurations(), testName, "Skipped", testName);
 				resultSummary(suite, testContext.getSkippedTests(), testName, "Skipped", "");
 				resultSummary(suite, testContext.getPassedTests(), testName, "Passed", "");
 				testIndex++;
@@ -135,7 +134,7 @@ public class CustomizedReport implements IReporter{
 	}
    
 	/** Creates a section showing known results for each method */
-	protected void generateMethodDetailReport(List<ISuite> suites) {
+	public void generateMethodDetailReport(List<ISuite> suites) {
 		m_methodIndex = 0;
 		for (ISuite suite : suites) {
 			Map<String, ISuiteResult> r = suite.getResults();
@@ -156,7 +155,7 @@ public class CustomizedReport implements IReporter{
 	/**
 	 * @param tests
 	 */
-	private void resultSummary(ISuite suite, IResultMap tests, String testname,
+	public void resultSummary(ISuite suite, IResultMap tests, String testname,
 			String style, String details) {
 		
 		if (tests.getAllResults().size() > 0) {
@@ -245,7 +244,7 @@ public class CustomizedReport implements IReporter{
 	}
     
 	
-	private String timeConversion(long seconds) {
+	public String timeConversion(long seconds) {
 
 	    final int MINUTES_IN_AN_HOUR = 60;
 	    final int SECONDS_IN_A_MINUTE = 60;
@@ -259,7 +258,7 @@ public class CustomizedReport implements IReporter{
 	    return prefixZeroToDigit(hours) + ":" + prefixZeroToDigit(minutes) + ":" + prefixZeroToDigit((int)seconds);
 	}
 	
-	private String prefixZeroToDigit(int num){
+	public String prefixZeroToDigit(int num){
 		int number=num;
 		if(number<=9){
 			String sNumber="0"+number;
@@ -271,15 +270,16 @@ public class CustomizedReport implements IReporter{
 	}
 	
 	/** Starts and defines columns result summary table */
-	private void startResultSummaryTable(String style) {
+	public void startResultSummaryTable(String style) {
 		tableStart(style, "summary");
-		writer.println("<h2 align='center'>Test Execution Detailed</h2>");
-		writer.println("<tr><th>Suite</th>"
-				+ "<th>Method</th><th>Exception Info</th><th>Start Time </th><th>Execution Time<br/>(hh:mm:ss)</th></tr>");
+		writer.println("<br><font color='#474352'><h2 align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test Execution Details</h2></font><br>");
+		writer.println("<tr><th bgcolor='#17E4DB'>Suite Name</th>"
+				+ "<th bgcolor='#17E4DB'>Method</th><th bgcolor='#17E4DB'>Exception Info</th><th bgcolor='#17E4DB'>Start Time </th><th bgcolor='#17E4DB'>Execution Time<br/></th></tr>");
 		m_row = 0;
 	}
 
-	private String qualifiedName(ITestNGMethod method) {
+	public String qualifiedName(ITestNGMethod method) {
 		StringBuilder addon = new StringBuilder();
 		String[] groups = method.getGroups();
 		int length = groups.length;
@@ -297,7 +297,7 @@ public class CustomizedReport implements IReporter{
 		return "<b>" + method.getMethodName() + "</b> " + addon;
 	}
 
-	private void resultDetail(IResultMap tests) {
+	public void resultDetail(IResultMap tests) {
 		Set<ITestResult> testResults=tests.getAllResults();
 		List<ITestResult> testResultsList = new ArrayList<ITestResult>(testResults);
 		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
@@ -315,7 +315,7 @@ public class CustomizedReport implements IReporter{
 		}
 	}
 
-	private void generateResult(ITestResult ans, ITestNGMethod method,
+	public void generateResult(ITestResult ans, ITestNGMethod method,
 			int resultSetSize) {
 		Object[] parameters = ans.getParameters();
 		boolean hasParameters = parameters != null && parameters.length > 0;
@@ -375,7 +375,7 @@ public class CustomizedReport implements IReporter{
 		}
 	}
 
-	protected void generateExceptionReport(Throwable exception, ITestNGMethod method) {
+	public void generateExceptionReport(Throwable exception, ITestNGMethod method) {
 		writer.print("<div class=\"stacktrace\">");
 		writer.print(Utils.stackTrace(exception, true)[0]);
 		writer.println("</div>");
@@ -385,7 +385,7 @@ public class CustomizedReport implements IReporter{
 	 * Since the methods will be sorted chronologically, we want to return the
 	 * ITestNGMethod from the invoked methods.
 	 */
-	private Collection<ITestNGMethod> getMethodSet(IResultMap tests, ISuite suite) {
+	public Collection<ITestNGMethod> getMethodSet(IResultMap tests, ISuite suite) {
 		
 		List<IInvokedMethod> r = Lists.newArrayList();
 		List<IInvokedMethod> invokedMethods = suite.getAllInvokedMethods();
@@ -426,17 +426,17 @@ public class CustomizedReport implements IReporter{
 	public void generateSuiteSummaryReport(List<ISuite> suites) {
 		tableStart("testOverview", null);
 		writer.print("<h1></h1>");
-		writer.print("<tr><th colspan='6'style=text-align:center bgcolor='#FFE4E1'> Test Execution Summary</th></tr>");
+		writer.print("<tr><th colspan='6'style=text-align:center bgcolor='#2ECCFA'> Test Execution Summary</th></tr>");
 		writer.print("<tr>");
-		tableColumnStart("Module Names:");
+		tableColumnStart("Module Names");
 		tableColumnStart("Total TC");
 		tableColumnStart("Executed");
 		tableColumnStart("Passed");
 		tableColumnStart("Failed");
 		tableColumnStart("Skipped");
 		//tableColumnStart("Browser");
-		tableColumnStart("Start<br/>Time");
-		tableColumnStart("End<br/>Time");
+	//	tableColumnStart("Start Time");
+	//	tableColumnStart("End Time");
 		//tableColumnStart("Total<br/>Time(hh:mm:ss)");
 		//tableColumnStart("Included<br/>Groups");
 		//tableColumnStart("Excluded<br/>Groups");
@@ -506,8 +506,8 @@ public class CustomizedReport implements IReporter{
 			summaryCell(qty_pass_m, Integer.MAX_VALUE);
 			summaryCell(qty_fail, 0);
 			summaryCell(qty_skip, Integer.MAX_VALUE);
-			summaryCell(" ", true);
-			summaryCell(" ", true);
+		//	summaryCell(" ", true);
+		//	summaryCell(" ", true);
 			//summaryCell(" ", true);
 			//summaryCell(timeConversion(((time_end - time_start) / 1000)), true);
 			//writer.println("<td colspan=\"3\">&nbsp;</td></tr>");
@@ -569,7 +569,7 @@ public class CustomizedReport implements IReporter{
 	}
 
 	protected void writeReportTitle(String title) {
-		writer.print("<center><h1>" + title + " - " + getDateAsString() + "</h1></center>");
+		writer.print("<font color='#474352'><center><h1>" + title + " - " + getDateAsString() + "</h1></center></font><br><br>");
 	}
 	
 
@@ -610,19 +610,19 @@ public class CustomizedReport implements IReporter{
 		out.println(".totop {font-size:85%;text-align:center;border-bottom:2px solid #000}");
 		out.println("</style>");
 		out.println("</head>");
-		out.println("<body>");
+		out.println("<body bgcolor='#F4F9F9'>");
 		
 	}
 
 	/** Finishes HTML stream */
-	protected void endHtml(PrintWriter out) {
+	public void endHtml(PrintWriter out) {
 		out.println("<center> TestNG Report </center>");
 		out.println("</body></html>");
 	}
 
 	// ~ Inner Classes --------------------------------------------------------
 	/** Arranges methods by classname and method name */
-	private class TestSorter implements Comparator<IInvokedMethod> {
+	public class TestSorter implements Comparator<IInvokedMethod> {
 		// ~ Methods
 		// -------------------------------------------------------------
 
@@ -634,7 +634,7 @@ public class CustomizedReport implements IReporter{
 		}
 	}
 	
-	private class TestMethodSorter implements Comparator<ITestNGMethod> {
+	public class TestMethodSorter implements Comparator<ITestNGMethod> {
 		
 		public int compare(ITestNGMethod obj1, ITestNGMethod obj2) {
 			int r = obj1.getTestClass().getName().compareTo(obj2.getTestClass().getName());
@@ -645,7 +645,7 @@ public class CustomizedReport implements IReporter{
 		}
 	}
 
-	private class TestResultsSorter implements Comparator<ITestResult> {
+	public class TestResultsSorter implements Comparator<ITestResult> {
 		
 		public int compare(ITestResult obj1, ITestResult obj2) {
 			int result = obj1.getTestClass().getName().compareTo(obj2.getTestClass().getName());
