@@ -21,7 +21,7 @@ import com.kagami.library.GenericMethods;
 import com.kagami.library.Global;
 import com.kagami.testconfig.TestConfig;
 
-public class DemoAUT4 {
+public class DemoAUT5 {
 	
 	private WebDriver driver=null;
 	GenericMethods genericMethods = new GenericMethods();
