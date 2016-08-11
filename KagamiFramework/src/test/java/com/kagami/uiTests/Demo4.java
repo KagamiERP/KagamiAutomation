@@ -6,13 +6,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
-public class DemoAUT4 {
+public class Demo4 {
 	
 	
 	@Test
 	public void demoAut4()
 	{
-		System.out.println("DemoAut4");
+		System.out.println("Printing Demo4");
 		
 		
 	}

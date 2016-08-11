@@ -9,8 +9,8 @@ import org.testng.annotations.ITestAnnotation;
 
 public class RetryListener implements IAnnotationTransformer {
 
-	
-	public void transform(ITestAnnotation testannotation, Class Retry, Constructor testConstructor, Method method)	{
+	public void transform(ITestAnnotation testannotation, Class Demo,
+			Constructor testConstructor, Method testMethod)	{
 		IRetryAnalyzer retry = testannotation.getRetryAnalyzer();
 
 		if (retry == null)	{

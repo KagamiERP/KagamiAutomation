@@ -9,20 +9,21 @@ import org.testng.annotations.Test;
 
 import com.kagami.library.GenericMethods;
 import com.kagami.library.Global;
-import com.kagami.testconfig.TestConfig;
+import com.kagami.testconfig.BrowserSelection;
+import com.kagami.testconfig.EmailSending;
 
 public class DemoAUT2 {
 	
 	private WebDriver driver=null;
 	GenericMethods genericMethods = new GenericMethods();
-	TestConfig testPreconditions = new TestConfig();
+	BrowserSelection browserSelection = new BrowserSelection();
 	XpathValue xpathValue = new XpathValue();
 	
 	@Test
 	public void register() throws Exception {
 		// TODO Auto-generated method stub
 
-		driver = testPreconditions.browserType(driver, Global.sBrowserType);
+		driver = browserSelection.browserType(driver, Global.sBrowserType);
 		
 		Map<String, List<String>> readMultipleTestData = genericMethods.readMultipleTestData(Global.sTestData, "Sheet3");
 		

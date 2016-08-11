@@ -16,14 +16,16 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import com.kagami.testconfig.TestConfig;
+import com.kagami.testconfig.BrowserSelection;
+import com.kagami.testconfig.EmailSending;
 
 
-public class TestListener extends TestConfig implements ITestListener {
+public class TestListener extends EmailSending implements ITestListener {
 	WebDriver driver=null;
 	String filePath = "./Screenshots/";
-	TestConfig testPreconditions = new TestConfig();
-    
+	
+	BrowserSelection browserSelection = new BrowserSelection();
+	
     public void onTestFailure(ITestResult result) {
     	System.out.println("***** Error "+result.getName()+" test has failed *****");
     	String methodName=result.getName().toString().trim();
@@ -52,11 +54,11 @@ public class TestListener extends TestConfig implements ITestListener {
     
     public void takeScreenShot(String methodName) throws EncryptedDocumentException, AddressException, InvalidFormatException, IOException, InterruptedException, MessagingException {
     	//get the driver
-    	driver=testPreconditions.browserType(driver, Global.sBrowserType);
+    	driver=browserSelection.browserType(driver, Global.sBrowserType);
     	 File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
          //The below method will save the screen shot in d drive with test method name 
             try {
-				FileUtils.copyFile(scrFile, new File(filePath+methodName.toUpperCase()+date()+"_"+".jpg"));
+				FileUtils.copyFile(scrFile, new File(filePath+methodName.toUpperCase()+"_"+date()+".jpg"));
 				System.out.println("***Placed screen shot in "+filePath+" ***");
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -2,25 +2,23 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <listeners>
-    <listener class-name="com.kagami.library.CustomizedReport"/>
+    <listener class-name="com.kagami.library.CustomizedReport_Deepika"/>
     <listener class-name="com.kagami.library.RetryListener"/>
     <listener class-name="com.kagami.library.TestListener"/>
   </listeners>
   <test name="Functional Test (failed)">
     <classes>
-      <class name="com.kagami.testconfig.TestConfig">
-        <methods>
-          <include name="zipSingleFile"/>
-          <include name="presuite"/>
-          <include name="main"/>
-        </methods>
-      </class> <!-- com.kagami.testconfig.TestConfig -->
       <class name="com.kagami.functionaltest.Demo2">
         <methods>
-          <include name="register"/>
           <include name="browserClose"/>
+          <include name="login"/>
         </methods>
       </class> <!-- com.kagami.functionaltest.Demo2 -->
+      <class name="com.kagami.testconfig.EmailSending">
+        <methods>
+          <include name="preSuite"/>
+        </methods>
+      </class> <!-- com.kagami.testconfig.EmailSending -->
     </classes>
   </test> <!-- Functional Test (failed) -->
 </suite> <!-- Failed suite [Suite] -->

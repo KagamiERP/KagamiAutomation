@@ -2,14 +2,14 @@ package com.kagami.uiTests;
 
 import org.testng.annotations.Test;
 
-public class DemoAUT3 {
+public class Demo3 {
 
   
 	@Test
-	public void demoAut3()
+	public void demo3()
 	{
 	    
-		System.out.println("DemoAut3");
+		System.out.println("Printing Demo3");
 	}
 
 	

@@ -2,7 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite">
    <listeners>
-    <listener class-name="com.kagami.library.CustomizedReport" />
+   <!--  <listener class-name="com.kagami.library.CustomizedReport" /> -->
+    <listener class-name="com.kagami.library.CustomizedReport_Deepika" />
     <listener class-name="com.kagami.library.RetryListener" />   
    <listener class-name="com.kagami.library.TestListener" />
    
@@ -11,18 +12,18 @@
  
  <test name="Functional Test ">
     <classes>
-      <class name="com.kagami.testconfig.TestConfig"/> 
+      <class name="com.kagami.testconfig.EmailSending"/> 
      <class name="com.kagami.functionaltest.Demo1"/>
-      <class name="com.kagami.functionaltest.Demo2"/>
+     <!--   <class name="com.kagami.functionaltest.Demo2"/> -->
    </classes>
       </test> 
- 
+ <!-- 
   <test name="UI Test">
   <classes>
-     <class name="com.kagami.uiTests.DemoAUT3"/>
-     <class name="com.kagami.uiTests.DemoAUT4"/> 
+    <class name="com.kagami.uiTests.Demo3"/>
+     <class name="com.kagami.uiTests.Demo4"/> 
      </classes> 
-      </test>
+      </test> -->
       
   <!--     
     <test name="Email Sending ">

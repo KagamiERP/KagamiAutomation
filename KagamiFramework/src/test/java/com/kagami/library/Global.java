@@ -10,23 +10,23 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-	public class Global {
+	public class Global extends CustomizedReport{
 		
 	
 		//obj.postsuite(browserType, browserVersion, os, url);*/
 	
 		
 		GenericMethods genericMethods = new GenericMethods();
-	//	public static final int iMaxRetryCount = 1;
+		public static final int iMaxRetryCount = 1;
 
 		public static WebDriver wDriver;
 		public static WebDriverWait wait;
 		public static JavascriptExecutor js;
 		
 		// Selects the browser to execute
-		public static String sBrowserType = "firefox";
+		//public static String sBrowserType = "firefox";
 		//public static String sBrowserType = "IE";
-		//public static String sBrowserType = "Chrome";
+		public static String sBrowserType = "Chrome";
 		public static String sTestData="TestData//testdata demoaut.xlsx";
 		public static String BuildInfo ="samplebuild";
 		
@@ -35,7 +35,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 		public static String sChormeDriverPath = "Browser_exe//chromedriver.exe";
 		
 		// Specifies the URL to be entered
-		public static String sUrl = "http://newtours.demoaut.com/";
+		public static String sUrl = "https://www.gmail.com";
 		//public static String sUrl = "https://encodable.com/uploaddemo/";
 		public String zipFileName = "./TestReport/TestReport_"+genericMethods.getcurrentDateAndTime()+".zip/";
 		public static String htmlFileForEmail = "./test-output/custom-report.html";

@@ -18,17 +18,18 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import com.kagami.library.Global;
-import com.kagami.testconfig.TestConfig;
+import com.kagami.testconfig.BrowserSelection;
+import com.kagami.testconfig.EmailSending;
 
 public class DemoAUT1 {
 	private WebDriver driver=null;
-	TestConfig testPreconditions = new TestConfig();
+	BrowserSelection browserSelection = new BrowserSelection();
 	@Test
 	public void uploadFile() throws EncryptedDocumentException, AddressException, InvalidFormatException, IOException, InterruptedException, MessagingException {
 	
 		String sFileName = "C:\\Users\\Manish\\Desktop\\just4Compare\\test.txt";
 		
-		driver = testPreconditions.browserType(driver,Global.sBrowserType);
+		driver = browserSelection.browserType(driver,Global.sBrowserType);
 	    StringSelection ss = new StringSelection(sFileName);
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
 		Robot robot = null;

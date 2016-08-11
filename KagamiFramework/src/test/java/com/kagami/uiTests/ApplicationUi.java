@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 import com.kagami.library.GenericMethods;
-import com.kagami.testconfig.TestConfig;
+import com.kagami.testconfig.EmailSending;
 public class ApplicationUi {
 	
 	public WebDriver driver;

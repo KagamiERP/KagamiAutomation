@@ -851,4 +851,41 @@ Objective: This method will define the Click operations performed on the objects
 			log.info("Unable to swith the frame ");			
 		}
 		}
+		
+		public boolean clickAndHold(WebDriver wDriver, By objLocator){
+			   try{
+			    visibilityStatus = ElementVisibility(wDriver, objLocator);
+			    if(visibilityStatus){
+			     element = getWebElement(wDriver, objLocator);
+			     act.clickAndHold(element);
+			     act.perform();
+			     log.info("Click and Hold operation on "+objLocator+" has been performed successfully");
+			    }
+			   return true;
+			   }
+			   catch (Exception e) {
+			    log.warn("Unable to perform click and hold operation on "+objLocator);  
+			   }
+			   return false;
+			  }
+			  
+			  public void getToolTipMessage(WebDriver wDriver, By objLocator){
+			   try{
+			    visibilityStatus = ElementVisibility(wDriver, objLocator);
+			    if(visibilityStatus){
+			     act = new Actions(wDriver);
+			     WebElement element = wDriver.findElement(objLocator);
+			     act.moveToElement(element).build().perform();
+			     String ToolTipText = getText(wDriver, objLocator);
+			     log.info(ToolTipText+" message was retrieved for"+objLocator);
+			     }
+			   }
+			   catch (Exception e) {
+			    log.warn("Unable retrieve the Tool Tip Text for "+objLocator);
+			   }
+			  }
+		
+		
+		
+		
 		}

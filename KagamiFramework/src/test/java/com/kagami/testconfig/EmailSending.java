@@ -1,6 +1,7 @@
 package com.kagami.testconfig;
 
 import java.io.File;
+import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,24 +49,22 @@ import com.kagami.library.Global;
 Author Name: Manish Anand
 Method: Presuite
 Objective: This method will help to take the backup of previously executed report
-Note : Do not change / please talk to author before you make any changes to the below code.
 */
 
-@Test
-public class TestConfig extends Global
+public class EmailSending extends Global
 {
 	
 	GenericMethods genericMethods= new GenericMethods();
 	Global global = new Global();
 	public WebDriver driver;
 	
-	@BeforeSuite
-	public void presuite() throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
+    @BeforeSuite
+	public void preSuite() throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
 	{
 		//Date d = new Date();
 	    //String date = d.toString().replace(":", "_");
 	    File filetoStore = new File("./test-output");
-	    File filetoCompress = new File("./Result_Archive/"+date()+".zip");
+	    File filetoCompress = new File("./Old_Reports/"+date()+".zip");
 	    Zip z = new Zip();
 	    
 	    try{
@@ -77,45 +76,9 @@ public class TestConfig extends Global
 	    	e.printStackTrace();
 	    }
 	  
-	}	 
-	    
-		@Test
-		public WebDriver browserType(WebDriver driver, String browserName) throws EncryptedDocumentException, InvalidFormatException, IOException, AddressException, InterruptedException, MessagingException
-			{
-			if(browserName == "firefox")
-			{
-				driver = new FirefoxDriver();
-			}
-			
-			else if(browserName.equalsIgnoreCase("chrome"))
-				{
-				    System.setProperty("webdriver.chrome.driver",Global.sChormeDriverPath);
-					driver = new ChromeDriver();
-				}
-			else
-			{
-				System.setProperty("webdriver.ie.driver",Global.sIEDriverPath);
-				driver = new InternetExplorerDriver();
-			}
-			
-			
-			String url = Global.sUrl;
-			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			driver.get(url);
-			Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-			String browserType = cap.getBrowserName();
-			String browserVersion = cap.getVersion();
-			String os = System.getProperty("os.name").toLowerCase();
-			postsuite(browserType, browserVersion, os, url);
-			return driver;
-		}
+	}	 	
 
-
-/** Summary 
-Author Name: Manish Anand
-Method: PostSuite
-Objective: This method will delete temp data after executing test suite
+/** 
  * @throws IOException 
  * @throws InvalidFormatException 
  * @throws EncryptedDocumentException 
@@ -127,14 +90,14 @@ Objective: This method will delete temp data after executing test suite
 Author Name: Manish Anand
 Method: Postsuite
 Objective: This method will help to send the backup of previously executed report
-Note : Do not change / please talk to author before you make any changes to the below code.
 */
 
-	@AfterSuite
-	public void postsuite(String browserName, String browserVersion, String os, String url) throws EncryptedDocumentException, InvalidFormatException, IOException, InterruptedException, AddressException, MessagingException
+	/*@AfterSuite
+	public void postSuite() throws EncryptedDocumentException, InvalidFormatException, IOException, InterruptedException, AddressException, MessagingException
 	{
 		
-	    	  Thread.sleep(9000);
+	//	String browserName, String browserVersion, String os, String url
+	    	  Thread.sleep(8000);
 		      //SMTP configuration
 				String host = "smtp.office365.com";
 				String port = "587";
@@ -180,9 +143,9 @@ Note : Do not change / please talk to author before you make any changes to the 
 						  + "<br></br>"
 					    
 						+ "Build Information : "+Global.BuildInfo + "<br></br>"
-							 +" Operating System : "+ os +"<br></br>"
-							 + "Browser Type & Version : " + browserName + " " +browserVersion +"<br></br>" +
-							  "URL / Server : " +Global.sUrl + "<br></br>" +
+				//			 +" Operating System : "+ os +"<br></br>"
+					//		 + "Browser Type & Version : " + browserName + " " +browserVersion +"<br></br>" +
+							+  "URL / Server : " +Global.sUrl + "<br></br>" +
 							  "Test Type : "  + "TestCycle1" +"<br></br>" 
 									 
 				    + "<table border=1><style=width:100%>"
@@ -235,6 +198,9 @@ Note : Do not change / please talk to author before you make any changes to the 
 				    + "Note: For more information you can download and open the attached zip file." 
 				    + "<br></br>" ;
 					    			
+				
+			
+				
 				
 				  MimeBodyPart messageBodyPart = new MimeBodyPart();
 				  messageBodyPart.setContent(message, "text/html");
@@ -295,31 +261,19 @@ Note : Do not change / please talk to author before you make any changes to the 
 			          fos.close();
 			          System.out.println(file.getCanonicalPath()+ " is zipped to "+zipFileName); 
 					 
-				 } catch	 (IOException e) {
+				 } catch(IOException e) {
 			            e.printStackTrace();
 			        }
 					}
+			 
+			 
 							
 			public String now() {
 				  Calendar cal = Calendar.getInstance();
 				  SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 				  return sdf.format(cal.getTime());
 				 }
-			// Test sending e-mail with attachments  
+		
 
-			 public static void main(String[] args) throws UnsupportedEncodingException, ParserConfigurationException, SAXException, IOException{
-
-			  try 
-			  {
-			 
-				  
-			   System.out.println("Email has been sent successfully to the registerd id.");
-			  } 
-			  	catch (Exception ex) 
-			  	{
-				  System.out.println("Oops!!Could not send email");
-				  ex.printStackTrace();
-			  	}		
-
-		 }
+*/
 	}
