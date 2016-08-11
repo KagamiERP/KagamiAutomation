@@ -29,7 +29,7 @@ public class Demo2 {
 		//driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver = browserSelection.browserType(driver, Global.sBrowserType);
 		driver.get(Global.sUrl);
-		driver.findElement(By.id("Emal"));
+		driver.findElement(By.id("Email"));
 		
 	}
 	@AfterClass

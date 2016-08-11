@@ -2,23 +2,27 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <listeners>
-    <listener class-name="com.kagami.library.CustomizedReport_Deepika"/>
+    <listener class-name="com.kagami.library.CustomizedReportNew"/>
     <listener class-name="com.kagami.library.RetryListener"/>
     <listener class-name="com.kagami.library.TestListener"/>
   </listeners>
-  <test name="Functional Test (failed)">
+  <test name="UI Test(failed)">
     <classes>
-      <class name="com.kagami.functionaltest.Demo2">
-        <methods>
-          <include name="browserClose"/>
-          <include name="login"/>
-        </methods>
-      </class> <!-- com.kagami.functionaltest.Demo2 -->
-      <class name="com.kagami.testconfig.EmailSending">
+      <class name="com.kagami.testconfig.PreSuiteConfig">
         <methods>
           <include name="preSuite"/>
         </methods>
-      </class> <!-- com.kagami.testconfig.EmailSending -->
+      </class> <!-- com.kagami.testconfig.PreSuiteConfig -->
+      <class name="com.kagami.uiTests.DemoAUT2">
+        <methods>
+          <include name="register"/>
+        </methods>
+      </class> <!-- com.kagami.uiTests.DemoAUT2 -->
+      <class name="com.kagami.functionaltest.Demo2">
+        <methods>
+          <include name="browserClose"/>
+        </methods>
+      </class> <!-- com.kagami.functionaltest.Demo2 -->
     </classes>
-  </test> <!-- Functional Test (failed) -->
+  </test> <!-- UI Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->
