@@ -2,22 +2,22 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="21" started-at="2016-08-11T05:41:08Z" finished-at="2016-08-11T05:41:08Z">
+  <suite name="Suite" duration-ms="19" started-at="2016-08-11T05:56:55Z" finished-at="2016-08-11T05:56:55Z">
     <groups>
     </groups>
-    <test name="Functional Test " duration-ms="21" started-at="2016-08-11T05:41:08Z" finished-at="2016-08-11T05:41:08Z">
+    <test name="Functional Test " duration-ms="19" started-at="2016-08-11T05:56:55Z" finished-at="2016-08-11T05:56:55Z">
+      <class name="com.kagami.testconfig.PreSuiteConfig">
+        <test-method status="PASS" signature="preSuite()[pri:0, instance:com.kagami.testconfig.PreSuiteConfig@1d8d30f7]" name="preSuite" is-config="true" duration-ms="66" started-at="2016-08-11T11:26:55Z" finished-at="2016-08-11T11:26:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preSuite -->
+      </class> <!-- com.kagami.testconfig.PreSuiteConfig -->
       <class name="com.kagami.functionaltest.Demo1">
-        <test-method status="PASS" signature="print()[pri:0, instance:com.kagami.functionaltest.Demo1@3e57cd70]" name="print" duration-ms="5" started-at="2016-08-11T11:11:08Z" finished-at="2016-08-11T11:11:08Z">
+        <test-method status="PASS" signature="print()[pri:0, instance:com.kagami.functionaltest.Demo1@3e57cd70]" name="print" duration-ms="7" started-at="2016-08-11T11:26:55Z" finished-at="2016-08-11T11:26:55Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- print -->
       </class> <!-- com.kagami.functionaltest.Demo1 -->
-      <class name="com.kagami.testconfig.EmailSending">
-        <test-method status="PASS" signature="preSuite()[pri:0, instance:com.kagami.testconfig.EmailSending@1d8d30f7]" name="preSuite" is-config="true" duration-ms="59" started-at="2016-08-11T11:11:08Z" finished-at="2016-08-11T11:11:08Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- preSuite -->
-      </class> <!-- com.kagami.testconfig.EmailSending -->
     </test> <!-- Functional Test  -->
   </suite> <!-- Suite -->
 </testng-results>

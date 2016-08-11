@@ -3,7 +3,7 @@
 <suite name="Suite">
    <listeners>
    <!--  <listener class-name="com.kagami.library.CustomizedReport" /> -->
-    <listener class-name="com.kagami.library.CustomizedReport_Deepika" />
+    <listener class-name="com.kagami.library.CustomizedReportNew" />
     <listener class-name="com.kagami.library.RetryListener" />   
    <listener class-name="com.kagami.library.TestListener" />
    
@@ -12,7 +12,7 @@
  
  <test name="Functional Test ">
     <classes>
-      <class name="com.kagami.testconfig.EmailSending"/> 
+      <class name="com.kagami.testconfig.PreSuiteConfig"/> 
      <class name="com.kagami.functionaltest.Demo1"/>
      <!--   <class name="com.kagami.functionaltest.Demo2"/> -->
    </classes>

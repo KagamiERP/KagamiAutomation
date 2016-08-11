@@ -17,10 +17,10 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import com.kagami.testconfig.BrowserSelection;
-import com.kagami.testconfig.EmailSending;
+import com.kagami.testconfig.PreSuiteConfig;
 
 
-public class TestListener extends EmailSending implements ITestListener {
+public class TestListener extends PreSuiteConfig implements ITestListener {
 	WebDriver driver=null;
 	String filePath = "./Screenshots/";
 	

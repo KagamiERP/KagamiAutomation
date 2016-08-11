@@ -57,7 +57,7 @@ import org.testng.collections.Lists;
 import org.testng.internal.Utils;
 import org.testng.xml.XmlSuite;
 
-public class CustomizedReport_Deepika implements IReporter{
+public class CustomizedReportNew implements IReporter{
 
 	Date d = new Date();
     String date = d.toString().replace(":", "_");

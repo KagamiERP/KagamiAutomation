@@ -51,7 +51,7 @@ Method: Presuite
 Objective: This method will help to take the backup of previously executed report
 */
 
-public class EmailSending extends Global
+public class PreSuiteConfig extends Global
 {
 	
 	GenericMethods genericMethods= new GenericMethods();

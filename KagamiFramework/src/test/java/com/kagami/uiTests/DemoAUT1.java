@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 
 import com.kagami.library.Global;
 import com.kagami.testconfig.BrowserSelection;
-import com.kagami.testconfig.EmailSending;
+import com.kagami.testconfig.PreSuiteConfig;
 
 public class DemoAUT1 {
 	private WebDriver driver=null;
