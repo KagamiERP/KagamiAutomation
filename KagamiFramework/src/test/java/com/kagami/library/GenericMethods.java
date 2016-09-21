@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
@@ -42,9 +43,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 /** Summary 
 Author Name: Vishnu Reddy
@@ -60,24 +64,30 @@ public class GenericMethods
 	private WebDriverWait wait;
 	private WebElement element;
 	private String errorMsg;
+	ExtentReports extent;
+	//ExtentTest test;
 
 	/** 
 Summary: About Click Operations
 Author Name: Vishnu Reddy
 Objective: This method will define the Click operations performed on the objects */
 
-	public boolean clickElement(WebDriver wDriver, By elementLocator) {
+	public boolean clickElement(WebDriver wDriver, By elementLocator , ExtentTest test) {
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator); 
+			extent = ExtentManager.Instance();
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
 			if(visibilityStatus){
 				wDriver.findElement(elementLocator).click();
 				log.info("The Element "+elementLocator+ " has been clicked" );
+				
 				return true;
 			}
 		}
 		catch (NoSuchElementException e){
-			errorMsg = e.getMessage();
+			test.log(LogStatus.FAIL, ExceptionUtils.getStackTrace(e));
+		//	errorMsg = e.getMessage();
 		}
+		
 		log.warn("The Element for "+elementLocator+" cannot be clicked because "+errorMsg);
 		return false;
 	}
@@ -87,16 +97,27 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will define to Enter Text in the object Fields */	
 
-	public boolean enterText(WebDriver wDriver, By elementLocator, String value) {
+	public boolean enterText(WebDriver wDriver, By elementLocator, String value , ExtentTest test) {
 
-		visibilityStatus = ElementVisibility(wDriver, elementLocator); 
-		if (visibilityStatus) {
-			wDriver.findElement(elementLocator).clear();
-			wDriver.findElement(elementLocator).sendKeys(value,Keys.ENTER);
-			log.info("The text " + value + " has been inputted successfully.");
-			return true;
+		try{
+			extent = ExtentManager.Instance();
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
+			if (visibilityStatus) {
+				//wDriver.findElement(elementLocator).clear();
+				wDriver.findElement(elementLocator).sendKeys(value);
+				log.info("The text " + value + " has been inputted successfully.");
+				return true;
+			}
 		}
-		log.warn("The text " + value + " could not be entered successfully");
+		catch(Exception e)
+		{
+			test.log(LogStatus.FAIL, ExceptionUtils.getStackTrace(e));
+			test.log(LogStatus.INFO, test.addScreenCapture(ExtentManager.CaptureScreen(wDriver)));
+			log.warn("The text " + value + " could not be entered successfully");
+		}
+		finally{
+			extent.flush();
+		}
 		return false;
 	}
 
@@ -105,7 +126,7 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will get the Xpath count of the object Fields */	
 
-	public int getXpathSize(WebDriver wDriver, By elementLocator) {
+	public int getXpathSize(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
 			int size = 0;
 			size = wDriver.findElements(elementLocator).size();
@@ -124,9 +145,9 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will get the Text from object Fields */
 
-	public String getText(WebDriver wDriver, By elementLocator) {
+	public String getText(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		String sValue = null;
-		visibilityStatus = ElementVisibility(wDriver, elementLocator);
+		visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 		if (visibilityStatus) {
 			sValue = wDriver.findElement(elementLocator).getText();
 			if (sValue == null) {
@@ -144,9 +165,9 @@ Objective: This method will define the Click operations performed on the objects
 	Objective: This method will verify the visibility status of the WebElement */
 
 
-	public WebElement getWebElement(WebDriver wDriver, By elementLocator) {
+	public WebElement getWebElement(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator); 
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
 			if (visibilityStatus) {
 				log.info("The Element " + elementLocator+ " is visible and can be used");
 				return wDriver.findElement(elementLocator);
@@ -164,8 +185,8 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will perform click operations on the visible & invisible elements */
 
-	public boolean clickElementByJsExecutor(WebDriver wDriver, By elementLocator){
-		visibilityStatus = ElementVisibility(wDriver, elementLocator); 
+	public boolean clickElementByJsExecutor(WebDriver wDriver, By elementLocator, ExtentTest test){
+		visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
 		if(visibilityStatus){
 			JavascriptExecutor jsDriver = (JavascriptExecutor) wDriver;
 			WebElement element =  wDriver.findElement(elementLocator);
@@ -181,9 +202,9 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will perform click operations by using User Actions */
 
-	public boolean click(WebDriver wDriver, By elementLocator) {
+	public boolean click(WebDriver wDriver, By elementLocator, ExtentTest test) {
 
-		WebElement wbElement = getWebElement(wDriver, elementLocator);
+		WebElement wbElement = getWebElement(wDriver, elementLocator, test);
 		if (wbElement == null) {
 			log.warn("The object " + elementLocator+ " cannot be clicked"  );
 			return false;
@@ -200,8 +221,9 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will Verify the Visibility of the Element */
 
-	public boolean ElementVisibility(WebDriver wDriver, By elementLocator) {
+	public boolean ElementVisibility(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try {
+			extent = ExtentManager.Instance();
 			visibilityStatus = wDriver.findElement(elementLocator).isDisplayed();
 			if(visibilityStatus){
 				log.info("Element " + elementLocator + " is visible");
@@ -209,8 +231,11 @@ Objective: This method will define the Click operations performed on the objects
 			}
 		} 
 		catch (NoSuchElementException e) {
+			test.log(LogStatus.INFO, test.addScreenCapture(ExtentManager.CaptureScreen(wDriver)));
+			test.log(LogStatus.FAIL,ExceptionUtils.getStackTrace(e));
 			errorMsg = e.getMessage();
 		}
+		
 		log.warn("The Element for " + elementLocator + " is not visible because "+errorMsg);
 		return false;
 	}
@@ -220,19 +245,19 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will select the value from dropdown by Index value */
 
-	public boolean selectByIndex(WebDriver wDriver, String elementLocator, int iIndexValue) {
-		visibilityStatus = ElementVisibility(wDriver, By.xpath((String)elementLocator));
+	public boolean selectByIndex(WebDriver wDriver, String elementLocator, int iIndexValue , ExtentTest test) {
+		visibilityStatus = ElementVisibility(wDriver, By.xpath((String)elementLocator), test);
 		if (!visibilityStatus)
 		{
 			log.warn("The element "+elementLocator+" is not visible");
 			return false;
 		}
-		int iOptionCount = getXpathSize(wDriver, By.xpath((String)elementLocator));
+		int iOptionCount = getXpathSize(wDriver, By.xpath((String)elementLocator), test);
 		if (iOptionCount < iIndexValue) {
 			log.info(iIndexValue + " index value is not valid");
 
 		}
-		click(wDriver, (By)By.xpath((String)(String.valueOf(elementLocator) + "[" + iIndexValue + "]")));
+		click(wDriver, (By)By.xpath((String)(String.valueOf(elementLocator) + "[" + iIndexValue + "]")), test);
 		return true;
 	}
 
@@ -258,10 +283,10 @@ Objective: This method will define the Click operations performed on the objects
 	Objective: This method will select the Value from the dropdown */
 
 
-	public void selectByVisibleText(WebDriver wDriver, By elementLocator, String valueToSelect) {
+	public void selectByVisibleText(WebDriver wDriver, By elementLocator, String valueToSelect , ExtentTest test) {
 
 		WebElement sValue = null;
-		visibilityStatus = ElementVisibility(wDriver, elementLocator);
+		visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 		if (visibilityStatus) {
 			sValue = wDriver.findElement(elementLocator);
 			if (sValue == null) {
@@ -286,10 +311,10 @@ Objective: This method will define the Click operations performed on the objects
 	Objective: This method will select the Value from the dropdown */
 
 
-	public void selectByValue(WebDriver wDriver, By elementLocator, String valueToSelect) {
+	public void selectByValue(WebDriver wDriver, By elementLocator, String valueToSelect, ExtentTest test) {
 
 		WebElement sValue = null;
-		visibilityStatus = ElementVisibility(wDriver, elementLocator);
+		visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 		if (visibilityStatus) {
 			sValue = wDriver.findElement(elementLocator);
 			if (sValue == null) {
@@ -388,9 +413,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform context click operation on web elements.
 	 */
 
-	public void rightClickActions(WebDriver wDriver, By elementLocator)
+	public void rightClickActions(WebDriver wDriver, By elementLocator, ExtentTest test)
 	{
-		visibilityStatus =	ElementVisibility(wDriver, elementLocator); 
+		visibilityStatus =	ElementVisibility(wDriver, elementLocator, test); 
 		try{
 			Actions rightClick = new Actions(wDriver);
 			rightClick.contextClick().build().perform();
@@ -410,9 +435,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform context click operation on web elements.
 	 */
 
-	public void doubleClickActions(WebDriver wDriver, By elementLocator)
+	public void doubleClickActions(WebDriver wDriver, By elementLocator, ExtentTest test)
 	{
-		visibilityStatus =	ElementVisibility(wDriver, elementLocator); 
+		visibilityStatus =	ElementVisibility(wDriver, elementLocator, test); 
 		try{
 			Actions rightClick = new Actions(wDriver);
 			rightClick.doubleClick().build().perform();
@@ -432,9 +457,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform multiple clicking on checkbox operation on web elements.
 	 */
 
-	public boolean selectMultiCheckbox(WebDriver wDriver, By elementLocator)
+	public boolean selectMultiCheckbox(WebDriver wDriver, By elementLocator, ExtentTest test)
 	{
-		visibilityStatus =	ElementVisibility(wDriver, elementLocator); 
+		visibilityStatus =	ElementVisibility(wDriver, elementLocator, test); 
 		try{
 			visibilityStatus = wDriver.findElement(elementLocator).isDisplayed(); 
 			if(visibilityStatus){
@@ -471,9 +496,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform single clicking on checkbox operation on web elements.
 	 */
 
-	public boolean selectSingleCheckbox(WebDriver wDriver, By elementLocator) {
+	public boolean selectSingleCheckbox(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
-			visibilityStatus =ElementVisibility(wDriver, elementLocator); 
+			visibilityStatus =ElementVisibility(wDriver, elementLocator, test); 
 
 			if(visibilityStatus)
 			{
@@ -495,9 +520,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform single clicking on checkbox operation on web elements.
 	 */
 
-	public boolean deSelectCheckbox(WebDriver wDriver, By elementLocator) {
+	public boolean deSelectCheckbox(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
-			visibilityStatus =ElementVisibility(wDriver, elementLocator); 
+			visibilityStatus =ElementVisibility(wDriver, elementLocator, test); 
 
 			if(visibilityStatus)
 			{
@@ -529,13 +554,13 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform single clicking on checkbox operation on web elements.
 	 */
 
-	public boolean selectRadioButton(WebDriver wDriver, By elementLocator) {
+	public boolean selectRadioButton(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
-			visibilityStatus =ElementVisibility(wDriver, elementLocator); 
+			visibilityStatus =ElementVisibility(wDriver, elementLocator, test); 
 
 			if(visibilityStatus)
 			{
-				clickElementByJsExecutor(wDriver, elementLocator);
+				clickElementByJsExecutor(wDriver, elementLocator, test);
 				log.info("The Radio button "+elementLocator+" is clicked");
 			}
 		}
@@ -553,9 +578,9 @@ Objective: This method will define the Click operations performed on the objects
 		 Objective: This method will perform single clicking on checkbox operation on web elements.
 	 */
 
-	public boolean deSelectRadioButton(WebDriver wDriver, By elementLocator) {
+	public boolean deSelectRadioButton(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try{
-			visibilityStatus =ElementVisibility(wDriver, elementLocator); 
+			visibilityStatus =ElementVisibility(wDriver, elementLocator, test); 
 
 			if(visibilityStatus)
 			{
@@ -563,7 +588,7 @@ Objective: This method will define the Click operations performed on the objects
 				boolean radioButtonIsSelected = wDriver.findElement(elementLocator).isSelected();
 				if(radioButtonIsSelected)
 				{   
-					clickElementByJsExecutor(wDriver, elementLocator);
+					clickElementByJsExecutor(wDriver, elementLocator, test);
 					log.info("The Radio Button "+elementLocator+" is deselected");
 				}
 				else
@@ -628,7 +653,7 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will Perform Mouse Over actions on the WebElements */
 
-	public void mouseOver(WebDriver wDriver, By elementLocator){
+	public void mouseOver(WebDriver wDriver, By elementLocator, ExtentTest test){
 		try{
 			Actions act = new Actions(wDriver);
 			WebElement element = wDriver.findElement(elementLocator);
@@ -707,9 +732,9 @@ Objective: This method will define the Click operations performed on the objects
 		Author Name: Vishnu Reddy
 		Objective: This method will Scroll Down the Web Page */
 
-	public boolean scrollDown(WebDriver wDriver, By elementLocator) {
+	public boolean scrollDown(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try {
-			visibilityStatus =ElementVisibility(wDriver, elementLocator);  
+			visibilityStatus =ElementVisibility(wDriver, elementLocator, test);  
 			if(visibilityStatus){
 				WebElement scroll = wDriver.findElement(elementLocator);
 				scroll.sendKeys(Keys.PAGE_DOWN);
@@ -793,6 +818,7 @@ Objective: This method will define the Click operations performed on the objects
 			robot.keyPress(KeyEvent.VK_TAB);	
 			Thread.sleep(2000);	
 			robot.keyPress(KeyEvent.VK_ENTER);	
+
 		}	
 		catch (Exception e) {
 			log.warn("Unable to save the file to local drive ");			
@@ -804,9 +830,9 @@ Objective: This method will define the Click operations performed on the objects
 		Author Name: Vishnu Reddy
 		Objective: This method will Click the Web Element and waits to perform the next action */
 
-	public WebElement clickAndWait(WebDriver wDriver, By elementLocator, long wWait){
+	public WebElement clickAndWait(WebDriver wDriver, By elementLocator, long wWait, ExtentTest test){
 		try {
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
 				WebElement element = wDriver.findElement(elementLocator);		
 				element.wait(wWait);
@@ -853,11 +879,11 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will perform Click and Hold actions on the WebElement */
 
-	public boolean clickAndHold(WebDriver wDriver, By elementLocator){
+	public boolean clickAndHold(WebDriver wDriver, By elementLocator, ExtentTest test){
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
-				element = getWebElement(wDriver, elementLocator);
+				element = getWebElement(wDriver, elementLocator, test);
 				act.clickAndHold(element);
 				act.perform();
 				log.info("Click and Hold operation on "+elementLocator+" has been performed successfully");
@@ -875,14 +901,14 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will get the Tool Tip text message of the fields in a WebPage */
 
-	public void getToolTipMessage(WebDriver wDriver, By elementLocator){
+	public void getToolTipMessage(WebDriver wDriver, By elementLocator, ExtentTest test){
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
 				act = new Actions(wDriver);
 				WebElement element = wDriver.findElement(elementLocator);
 				act.moveToElement(element).build().perform();
-				String ToolTipText = getText(wDriver, elementLocator);
+				String ToolTipText = getText(wDriver, elementLocator, test);
 				log.info(ToolTipText+" message was retrieved for "+elementLocator);
 			}
 		}
@@ -896,11 +922,11 @@ Objective: This method will define the Click operations performed on the objects
 	Author Name: Vishnu Reddy
 	Objective: This method will Validate the actual and expected error messages using assert class */
 
-	public void validationErrorMsg(WebDriver wDriver, By elementLocator){
+	public void validationErrorMsg(WebDriver wDriver, By elementLocator, ExtentTest test){
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
-				String actual = getText(wDriver, elementLocator);
+				String actual = getText(wDriver, elementLocator, test);
 				String expected = "The input value was not a correct number";
 				Assert.assertEquals(expected, actual);
 				errorMsg = actual+ "error message is not as expected "+expected;
@@ -984,11 +1010,11 @@ Objective: This method will define the Click operations performed on the objects
 		return false;
 	}
 
-	public String getTextByJSExecutor(WebDriver wDriver, By elementLocator) {
+	public String getTextByJSExecutor(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		String sValue = null; 
-		visibilityStatus = ElementVisibility(wDriver, elementLocator); 
+		visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
 		if (visibilityStatus) { 
-			highlightWebElement(wDriver, elementLocator);
+			highlightWebElement(wDriver, elementLocator, test);
 			JavascriptExecutor jsExecutor = (JavascriptExecutor) wDriver; 
 			WebElement element = wDriver.findElement(elementLocator);
 			sValue = jsExecutor.executeScript("return arguments[0].innerText;", element).toString(); 
@@ -1001,9 +1027,9 @@ Objective: This method will define the Click operations performed on the objects
 		return sValue; 
 	}
 
-	public boolean highlightWebElement(WebDriver wDriver, By elementLocator) {
+	public boolean highlightWebElement(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try {
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if (visibilityStatus) {
 				WebElement element = wDriver.findElement(elementLocator);
 				JavascriptExecutor js = (JavascriptExecutor) wDriver;
@@ -1016,7 +1042,7 @@ Objective: This method will define the Click operations performed on the objects
 			}
 			log.info("The WebElement " + element + " has been highlighted successfully");
 			return true;
-		} catch (NoSuchElementException | InterruptedException e) {
+		} catch (Exception e) {
 			errorMsg = e.getMessage();
 		}
 		log.warn("The WebElement " + element + " has not been highlighted because " + errorMsg);
@@ -1116,10 +1142,10 @@ Objective: This method will define the Click operations performed on the objects
 	 */
 
 
-	public boolean downloadedFileVerificationByFileName(WebDriver wDriver,By elementLocator, String downloadFilepath, String fileName)
+	public boolean downloadedFileVerificationByFileName(WebDriver wDriver,By elementLocator, String downloadFilepath, String fileName , ExtentTest test)
 	{
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
 				WebElement element = wDriver.findElement(elementLocator);
 				element.click();
@@ -1165,10 +1191,10 @@ Objective: This method will define the Click operations performed on the objects
 	 */
 
 
-	public boolean downloadedFileVerificationByFileLastModified(WebDriver wDriver,By elementLocator, String downloadFilepath)
+	public boolean downloadedFileVerificationByFileLastModified(WebDriver wDriver,By elementLocator, String downloadFilepath, ExtentTest test)
 	{
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
 				WebElement element = wDriver.findElement(elementLocator);
 				element.click();
@@ -1219,10 +1245,10 @@ Objective: This method will define the Click operations performed on the objects
 	 */
 
 
-	public boolean downloadedFileVerificationByFileExtension(WebDriver wDriver,By elementLocator, String downloadFilepath)
+	public boolean downloadedFileVerificationByFileExtension(WebDriver wDriver,By elementLocator, String downloadFilepath , ExtentTest test)
 	{
 		try{
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if(visibilityStatus){
 				WebElement element = wDriver.findElement(elementLocator);
 				element.click();
@@ -1293,7 +1319,7 @@ Objective: This method will define the Click operations performed on the objects
 				JavascriptExecutor jsDriver = (JavascriptExecutor)wDriver;
 				jsDriver.executeScript("alert('File size limit exceeding, file size limit is 5 mb ..');");
 				Thread.sleep(5000);
-				wDriver.switchTo().alert().dismiss();
+				//wDriver.switchTo().alert().dismiss();
 
 			} 
 
@@ -1312,11 +1338,11 @@ Objective: This method will define the Click operations performed on the objects
 	 */
 
 	public boolean selectDropdownValueByInputText(WebDriver wDriver, By elementLocator, String sValue,
-			By elementLocatorToSelectValue) throws InterruptedException {
+			By elementLocatorToSelectValue, ExtentTest test) throws InterruptedException {
 		try {
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if (visibilityStatus) {
-				enterText(wDriver, elementLocator, sValue);
+				enterText(wDriver, elementLocator, sValue, test);
 				WebElement select = wDriver.findElement(elementLocator);
 				List<WebElement> options = select.findElements(elementLocatorToSelectValue);
 				for (WebElement option : options) {
@@ -1339,9 +1365,9 @@ Objective: This method will define the Click operations performed on the objects
 	 * Objective: This method will perform scroll down operations using JSExecutor
 	 */
 
-	public boolean scrollDownByJSExecutor(WebDriver wDriver, By elementLocator) {
+	public boolean scrollDownByJSExecutor(WebDriver wDriver, By elementLocator, ExtentTest test) {
 		try {
-			visibilityStatus = ElementVisibility(wDriver, elementLocator);
+			visibilityStatus = ElementVisibility(wDriver, elementLocator, test);
 			if (visibilityStatus) {
 				JavascriptExecutor jsExecutor = (JavascriptExecutor) wDriver;
 				WebElement element = wDriver.findElement(elementLocator);
