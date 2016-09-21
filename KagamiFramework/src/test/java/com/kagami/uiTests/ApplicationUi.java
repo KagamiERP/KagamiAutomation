@@ -12,10 +12,10 @@ import org.testng.annotations.Test;
 
 import com.kagami.library.GenericMethods;
 import com.kagami.testconfig.PreSuiteConfig;
-public class ApplicationUi {
+public class ApplicationUi { 
 	
 	public WebDriver driver;
-	GenericMethods genericMethods = new GenericMethods();
+	GenericMethods genericMethods = new GenericMethods(); 
 	XpathValue xpathValue = new XpathValue();
 	
 	@Test

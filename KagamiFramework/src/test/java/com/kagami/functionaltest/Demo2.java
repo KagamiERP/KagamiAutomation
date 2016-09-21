@@ -1,11 +1,11 @@
 package com.kagami.functionaltest;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.By;
@@ -15,8 +15,6 @@ import org.testng.annotations.Test;
 
 import com.kagami.library.Global;
 import com.kagami.testconfig.BrowserSelection;
-import org.apache.log4j.Logger;
-import org.apache.log4j.BasicConfigurator;
 
 public class Demo2 {
 	
@@ -29,7 +27,7 @@ public class Demo2 {
 		//driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver = browserSelection.browserType(driver, Global.sBrowserType);
 		driver.get(Global.sUrl);
-		driver.findElement(By.id("Email"));
+		driver.findElement(By.id("Eail"));
 		
 	}
 	@AfterClass

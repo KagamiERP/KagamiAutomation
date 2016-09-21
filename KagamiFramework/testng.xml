@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="Guru Test Suite">
    <listeners>
-   <!--  <listener class-name="com.kagami.library.CustomizedReport" /> -->
-    <listener class-name="com.kagami.library.CustomizedReportNew" />
-    <listener class-name="com.kagami.library.RetryListener" />   
-   <listener class-name="com.kagami.library.TestListener" />
+     
+ <!-- <listener class-name="com.kagami.library.EmailConfig" /> working -->
+     
    
-  </listeners>
-  
- <!-- 
- <test name="Functional Test ">
-    <classes>
-      <class name="com.kagami.testconfig.PreSuiteConfig"/> 
-     <class name="com.kagami.functionaltest.Demo1"/>
-       <class name="com.kagami.functionaltest.Demo2"/> 
-   </classes>
-      </test> 
+      <!--  <listener class-name="com.kagami.library.RetryListener" />   -->
+  <!--  <listener class-name="com.kagami.library.TestListener" />
+   -->
+    <!-- 
+    <listener class-name="com.kagami.library.CustomizedReport1" /> 
+    <listener class-name="com.kagami.library.EmailConfig" />
+    <listener class-name="com.kagami.library.CustomizedReportNew" />  -->
+    
+    </listeners>
+
+
+
+	<test name="Method Test ">
+		<classes>
+			 <class name="com.guru99.testcases.GLPDemo" /> 
+			<!--  
+			 <class name = "com.guru99.testcases.TestExtent" />  -->
  
+		</classes>
+	</test> 
+	
+	
+ <!-- 
   <test name="UI Test">
   <classes>
     <class name="com.kagami.uiTests.DemoAUT2"/>
@@ -25,14 +36,13 @@
      </classes> 
       </test>  -->
  
- 
+ <!-- 
   <test name="Sample Test 1">
   <classes>
     <class name="com.kagami.testsuite1.Class1"/>
      <class name="com.kagami.testsuite1.Class2"/>
      <class name="com.kagami.testsuite1.Class3"/>
      <class name="com.kagami.testsuite1.Class4"/>
-     <class name="com.kagami.testsuite1.Class5"/>
      </classes> 
       </test> 
  
@@ -44,7 +54,7 @@
      <class name="com.kagami.testsuite2.Class4"/>
      <class name="com.kagami.testsuite2.Class5"/>
      </classes> 
-      </test>  
+      </test>    -->
       
   <!--     
     <test name="Email Sending ">

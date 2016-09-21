@@ -7,12 +7,12 @@
     </path>
      
     <target name="generateReport">
-        <delete dir="${basedir}/testng-xslt">
+        <delete dir="${basedir}/TestReportDemo">
         </delete>
-        <mkdir dir="${basedir}/testng-xslt">
+        <mkdir dir="${basedir}/TestReportDemo">
         </mkdir>
-        <xslt in="${basedir}/test-output/testng-results.xml" style="${basedir}/testng-results.xsl" out="${basedir}/testng-xslt/index.html">
-            <param expression="${basedir}/testng-xslt/" name="testNgXslt.outputDir" />
+        <xslt in="${basedir}/test-output/testng-results.xml" style="${basedir}/testng-results.xsl" out="${basedir}/TestReportDemo/index.html">
+            <param expression="${basedir}/TestReportDemo/" name="testNgXslt.outputDir" />
             <param expression="true" name="testNgXslt.sortTestCaseLinks" />
             <param expression="FAIL,SKIP,PASS,CONF,BY_CLASS" name="testNgXslt.testDetailsFilter" />
             <param expression="true" name="testNgXslt.showRuntimeTotals" />

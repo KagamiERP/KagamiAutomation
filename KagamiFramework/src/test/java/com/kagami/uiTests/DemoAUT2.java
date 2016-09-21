@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import com.kagami.library.GenericMethods;
 import com.kagami.library.Global;
 import com.kagami.testconfig.BrowserSelection;
-import com.kagami.testconfig.PreSuiteConfig;
 
 public class DemoAUT2 {
 	
@@ -27,7 +26,7 @@ public class DemoAUT2 {
 		
 		Map<String, List<String>> readMultipleTestData = genericMethods.readMultipleTestData(Global.sTestData, "Sheet3");
 		
-		List<String> firstName = readMultipleTestData.get("FistName");
+		List<String> firstName = readMultipleTestData.get("FirstName");
 		List<String> lastName = readMultipleTestData.get("LastName");
 		List<String> phone = readMultipleTestData.get("Phone");
 		List<String> email = readMultipleTestData.get("Email");

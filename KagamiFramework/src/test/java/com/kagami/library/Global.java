@@ -35,8 +35,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 		public static String sChormeDriverPath = "Browser_exe//chromedriver.exe";
 		
 		// Specifies the URL to be entered
-		public static String sUrl = "https://www.gmail.com";
-		//public static String sUrl = "https://encodable.com/uploaddemo/";
+	//	public static String sUrl = "http://viralpatel.net/blogs/multiple-checkbox-select-deselect-jquery-tutorial-example/";
+    //	public static String sUrl = "http://newtours.demoaut.com/";
+	//	public static String sUrl = "https://www.makemytrip.com/flights";
+	//	public static String sUrl = "http://spreadsheetpage.com/index.php/file/C35/P10//";
+	//	public static String sUrl = "http://www.tinyupload.com/";
+		public static String sUrl = "http://demo.guru99.com/V4/";
+	//	public static String[] sUrlArray = {"https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier","https://www.facebook.com"};
+	//	sUrl[0] = "https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier";
+		
+	//	public static String sUrl = "https://encodable.com/uploaddemo/";
 		public String zipFileName = "./TestReport/TestReport_"+genericMethods.getcurrentDateAndTime()+".zip/";
 		public static String htmlFileForEmail = "./test-output/custom-report.html";
 		//public String date = genericMethods.getcurrentDateAndTime();

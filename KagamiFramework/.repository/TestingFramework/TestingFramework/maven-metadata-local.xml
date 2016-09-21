@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>TestingFramework</groupId>
+  <artifactId>TestingFramework</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160824052404</lastUpdated>
+  </versioning>
+</metadata>

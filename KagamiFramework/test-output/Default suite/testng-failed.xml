@@ -3,12 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.kagami.functionaltest.Demo2">
+      <class name="com.guru99.testcases.TestExtent">
         <methods>
-          <include name="browserClose"/>
-          <include name="login"/>
+          <include name="test1"/>
+          <include name="test2"/>
+          <include name="preClass"/>
         </methods>
-      </class> <!-- com.kagami.functionaltest.Demo2 -->
+      </class> <!-- com.guru99.testcases.TestExtent -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
