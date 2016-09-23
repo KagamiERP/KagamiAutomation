@@ -40,7 +40,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 	//	public static String sUrl = "https://www.makemytrip.com/flights";
 	//	public static String sUrl = "http://spreadsheetpage.com/index.php/file/C35/P10//";
 	//	public static String sUrl = "http://www.tinyupload.com/";
-		public static String sUrl = "http://demo.guru99.com/V4/";
+	//	public static String sUrl = "http://demo.guru99.com/V4/";
+		public static String sUrl = "http://192.168.1.55:7070/kagami-studio/auth/signin";
 	//	public static String[] sUrlArray = {"https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier","https://www.facebook.com"};
 	//	sUrl[0] = "https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier";
 		

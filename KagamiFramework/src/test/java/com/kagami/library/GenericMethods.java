@@ -74,7 +74,7 @@ Objective: This method will define the Click operations performed on the objects
 
 	public boolean clickElement(WebDriver wDriver, By elementLocator , ExtentTest test) {
 		try{
-			extent = ExtentManager.Instance();
+		
 			visibilityStatus = ElementVisibility(wDriver, elementLocator, test); 
 			if(visibilityStatus){
 				wDriver.findElement(elementLocator).click();
@@ -115,9 +115,7 @@ Objective: This method will define the Click operations performed on the objects
 			test.log(LogStatus.INFO, test.addScreenCapture(ExtentManager.CaptureScreen(wDriver)));
 			log.warn("The text " + value + " could not be entered successfully");
 		}
-		finally{
-			extent.flush();
-		}
+	
 		return false;
 	}
 
